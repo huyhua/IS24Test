@@ -79,7 +79,7 @@ public class AppiumSetup implements SauceOnDemandSessionIdProvider {
 		capabilities.setCapability("deviceName", "iPhone Simulator");
 
 		String userDir = System.getProperty("user.dir");
-		String localApp = "AutoScout24Alpha.zip";
+		String localApp = "ImmoScout24Alpha.zip";
 		if (runOnSauce) {
 			String user = auth.getUsername();
 			String key = auth.getAccessKey();
