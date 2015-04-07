@@ -1,10 +1,10 @@
 package com.nvg.IS24.appium.pageObject;
 
-import io.appium.java_client.ios.IOSDriver;
-import io.appium.java_client.ios.IOSElement;
 import static com.nvg.IS24.appium.IS24Test.Core.Helpers.for_text;
 import static com.nvg.IS24.appium.IS24Test.Core.Helpers.uiAutomation;
 import static com.nvg.IS24.appium.IS24Test.Core.Helpers.waitMsec;
+import io.appium.java_client.ios.IOSDriver;
+import io.appium.java_client.ios.IOSElement;
 
 public class LoginPageObject extends MasterPageObject {
 

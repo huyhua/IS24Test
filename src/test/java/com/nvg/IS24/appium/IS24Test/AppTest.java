@@ -1,9 +1,6 @@
 package com.nvg.IS24.appium.IS24Test;
 
-import org.junit.Ignore;
 import org.junit.Test;
-
-import static com.nvg.IS24.appium.IS24Test.Core.Helpers.waitSec;
 
 import com.nvg.IS24.appium.IS24Test.Core.TestBase;
 import com.nvg.IS24.appium.pageObject.LoginPageObject;

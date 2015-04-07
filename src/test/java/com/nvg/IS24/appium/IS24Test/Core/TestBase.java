@@ -1,6 +1,6 @@
 package com.nvg.IS24.appium.IS24Test.Core;
 
-import static com.nvg.IS24.appium.IS24Test.Core.Helpers.*;
+import static com.nvg.IS24.appium.IS24Test.Core.Helpers.waitSec;
 import io.appium.java_client.ios.IOSDriver;
 
 import java.util.concurrent.TimeUnit;
