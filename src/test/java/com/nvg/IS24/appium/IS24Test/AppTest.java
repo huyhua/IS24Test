@@ -9,6 +9,7 @@ import static org.hamcrest.CoreMatchers.*;
 
 
 import com.nvg.IS24.appium.IS24Test.Core.TestBase;
+import static com.nvg.IS24.appium.IS24Test.Core.Helpers.waitMsec;
 import com.nvg.IS24.appium.pageObject.LoginPageObject;
 import com.nvg.IS24.appium.pageObject.SearchPageObject;
 
@@ -34,6 +35,7 @@ public class AppTest extends TestBase {
 			collector.checkThat("City Area tab is empty", searchPage.cityArea
 					.open().getAll().isEmpty(), is(false));
 			searchPage.back();
+			waitMsec(500);
 		});
 		
 		//Test case 1.2, reusing current session to avoid losing time
