@@ -10,6 +10,7 @@ public abstract class MasterPageObject extends PageObjectBase {
 	public MasterPageObject(IOSDriver driver) {
 		super(driver);
 		menuPage = new menuPageObject(driver);
+		
 	}
 
 	public MasterPageObject done() {
@@ -35,10 +36,8 @@ public abstract class MasterPageObject extends PageObjectBase {
 
 		public menuPageObject open() {
 
-			driver.findElementByIosUIAutomation(
-					"UIATarget.localTarget().frontMostApp().buttons()[\"Menu\"]")
+			driver.findElementByIosUIAutomation("UIATarget.localTarget().frontMostApp().navigationBar().buttons()[\"Menu\"]")
 					.click();
-			;
 			waitForPage();
 			return this;
 		}
