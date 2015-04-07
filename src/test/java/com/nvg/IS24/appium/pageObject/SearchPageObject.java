@@ -1,11 +1,11 @@
 package com.nvg.IS24.appium.pageObject;
 
-import io.appium.java_client.ios.IOSDriver;
-import io.appium.java_client.ios.IOSElement;
 import static com.nvg.IS24.appium.IS24Test.Core.Helpers.for_tags;
 import static com.nvg.IS24.appium.IS24Test.Core.Helpers.uiAutomation;
-import static com.nvg.IS24.appium.IS24Test.Core.Helpers.waitSec;
 import static com.nvg.IS24.appium.IS24Test.Core.Helpers.waitMsec;
+import static com.nvg.IS24.appium.IS24Test.Core.Helpers.waitSec;
+import io.appium.java_client.ios.IOSDriver;
+import io.appium.java_client.ios.IOSElement;
 
 public class SearchPageObject extends MasterPageObject {
 

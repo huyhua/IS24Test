@@ -3,15 +3,15 @@ package com.nvg.IS24.appium.IS24Test.Core;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.ios.IOSDriver;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 public abstract class Helpers {
 
