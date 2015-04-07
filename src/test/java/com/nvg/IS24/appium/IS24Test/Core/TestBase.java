@@ -17,7 +17,7 @@ public abstract class TestBase extends AppiumSetup {
 	};
 	
 	public void bypassInitialScreens(){
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 		try {
 			driver.findElementByIosUIAutomation("UIATarget.localTarget().frontMostApp().alert().buttons()[\"Ignore\"]").click();;
 		} catch (Exception e) {
@@ -25,12 +25,12 @@ public abstract class TestBase extends AppiumSetup {
 		}
 		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		try {
-			driver.findElementByIosUIAutomation("UIATarget.localTarget().frontMostApp().alert().buttons()[\"Deutsch\"]").click();;
+			driver.findElementByIosUIAutomation("UIATarget.localTarget().frontMostApp().alert().buttons()[\"English\"]").click();;
 		} catch (Exception e) {
 			//If one of the 2 screens don't appear. Skip it instead of disband test
 		}
 		driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-		waitSec(15);
+		waitSec(5);
 		
 	}
 

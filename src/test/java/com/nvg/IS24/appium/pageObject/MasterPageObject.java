@@ -2,59 +2,81 @@ package com.nvg.IS24.appium.pageObject;
 
 import static com.nvg.IS24.appium.IS24Test.Core.Helpers.for_text;
 import static com.nvg.IS24.appium.IS24Test.Core.Helpers.uiAutomation;
-import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.ios.IOSDriver;
 
 public abstract class MasterPageObject extends PageObjectBase {
 	public menuPageObject menuPage;
 
-	public MasterPageObject(AppiumDriver driver) {
+	public MasterPageObject(IOSDriver driver) {
 		super(driver);
 		menuPage = new menuPageObject(driver);
 	}
 
+	public MasterPageObject done() {
+		driver.findElementByIosUIAutomation(
+				"UIATarget.localTarget().frontMostApp().navigationBar().rightButton()")
+				.click();
+		return this;
+	}
+
+	public MasterPageObject back() {
+		driver.findElementByIosUIAutomation(
+				"UIATarget.localTarget().frontMostApp().navigationBar().leftButton()")
+				.click();
+		return this;
+	}
+
 	public class menuPageObject extends PageElementObjectBase {
 
-		public menuPageObject(AppiumDriver driver) {
+		public menuPageObject(IOSDriver driver) {
 			super(driver);
-			setPageIdentifier(for_text("MenuAutoScoutLogo"));
+			setPageIdentifier(for_text("Home"));
 		}
 
 		public menuPageObject open() {
-			
-			uiAutomation("buttons()[4]").click();
+
+			driver.findElementByIosUIAutomation(
+					"UIATarget.localTarget().frontMostApp().buttons()[\"Menu\"]")
+					.click();
+			;
 			waitForPage();
 			return this;
 		}
 
-		public menuPageObject clickSearch() {
-			uiAutomation("tableViews()[2].cells()[\"Suchen\"]").click();
+		public menuPageObject search() {
+			uiAutomation("tableViews()[0].cells()[\"Search\"]").click();
 			return this;
 		}
 
-		public menuPageObject clickLogin() {
-			
-			uiAutomation("tableViews()[2].cells()[\"Anmelden\"]").click();;
+		public menuPageObject login() {
+
+			uiAutomation("tableViews()[0].cells()[\"Sign in / Sign up\"]")
+					.click();
+			;
 			return this;
 		}
 
-		public menuPageObject clickSavedSearch() {
-			
-			uiAutomation("tableViews()[2].cells()[\"Benachrichtigungen\"]").click();;
+		public menuPageObject notifications() {
+
+			uiAutomation("tableViews()[2].cells()[\"Notifications\"]").click();
+			;
 
 			return this;
 		}
 
-		public menuPageObject clickFeedback() {
-			
-			uiAutomation("tableViews()[2].cells()[\"Feedback\"]").click();
-			
+		public menuPageObject feedback() {
+
+			uiAutomation("tableViews()[2].cells()[\"Your opinion\"]").click();
+
 			return this;
 		}
 
-		public menuPageObject clickFavorite() {
+		public menuPageObject favorites() {
 
-			uiAutomation("tableViews()[2].cells()[\"favoriten\"]").click();;
-			
+			uiAutomation("tableViews()[2].cells()[\"List of favourites\"]")
+					.click();
+			;
+
 			return this;
 		}
 	}
