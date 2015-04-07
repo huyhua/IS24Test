@@ -16,7 +16,7 @@ public abstract class TestBase extends AppiumSetup {
 			
 	};
 	
-	public void bypassInitialScreens(){
+	private void bypassInitialScreens(){
 		driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 		try {
 			driver.findElementByIosUIAutomation("UIATarget.localTarget().frontMostApp().alert().buttons()[\"Ignore\"]").click();;
