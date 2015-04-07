@@ -267,19 +267,19 @@ public abstract class Helpers {
 	 * Sleep the thread for an amount of time
 	 */
 	public static void waitMsec(int ms) {
-			try {
-				Thread.sleep(ms);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+		try {
+			Thread.sleep(ms);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
 	 * Sleep the thread for an amount of time
 	 */
-	public static void waitSec(int sec){
+	public static void waitSec(int sec) {
 		try {
-			Thread.sleep(sec*1000);
+			Thread.sleep(sec * 1000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

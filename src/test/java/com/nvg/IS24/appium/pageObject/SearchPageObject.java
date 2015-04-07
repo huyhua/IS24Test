@@ -71,12 +71,12 @@ public class SearchPageObject extends MasterPageObject {
 
 		return new SearchPageObject(driver);
 	}
-	
-	public SearchPageObject search(){
-		
+
+	public SearchPageObject search() {
+
 		uiAutomation("buttons()[0]").click();
 		waitMsec(500);
-		
+
 		return this;
 	}
 
