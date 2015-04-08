@@ -15,11 +15,13 @@ public class SearchPageObject extends MasterPageObject {
 
 	public int hitNumber;
 	public CityAreaPageObject cityArea;
+	public RadiusPageObject radius;
 
 	public SearchPageObject(IOSDriver driver) {
 		super(driver);
 		setPageIdentifier(for_tags("UIANavigationBar"));
 		cityArea = new CityAreaPageObject(driver);
+		radius = new RadiusPageObject(driver);
 		hitNumber = getSearchResult();
 	}
 
@@ -92,25 +94,55 @@ public class SearchPageObject extends MasterPageObject {
 
 			return all;
 		}
+		
+		public CityAreaPageObject select(String area){
+			
+			uiAutomation("tableViews()[0].cells()[\"" + area + "\"]").click();
+			done();
+			waitMsec(500);
+			return this;
+		}
 	}
 
 	public SearchPageObject cityArea(String area) {
 
-		uiAutomation("tableViews()[0].cells()[\"City areas\"]").click();
-		waitSec(1);
-		uiAutomation("tableViews()[0].cells()[\"" + area + "\"]").click();
-		done();
-		waitMsec(500);
+		cityArea.open()
+		.select(area);
+		
 		return new SearchPageObject(driver);
 	}
 
+	public class RadiusPageObject extends PageElementObjectBase{
+
+		public RadiusPageObject(IOSDriver driver) {
+			super(driver);
+			
+		}
+		
+		public RadiusPageObject open(){
+			
+			uiAutomation("tableViews()[0].cells()[\"Radius\"]").click();
+			waitMsec(500);
+			return this;
+		}
+		
+		public List<MobileElement> getRadius(){
+			return uiAutomations("tableViews()[0].visibleCells()");
+		}
+		
+		public RadiusPageObject select(int index){
+			
+			uiAutomation("tableViews()[0].visibleCells()[" + index + "]").click();
+			waitMsec(500);
+			return this;
+		}
+		
+	}
+	
 	public SearchPageObject radius(int index) {
 
-		uiAutomation("tableViews()[0].cells()[\"Radius\"]").click();
-		waitMsec(500);
-		uiAutomation("tableViews()[0].visibleCells()[" + index + "]").click();
-		waitMsec(500);
-
+		radius.open()
+		.select(index);
 		return new SearchPageObject(driver);
 	}
 
@@ -124,7 +156,6 @@ public class SearchPageObject extends MasterPageObject {
 
 	public int getSearchResult() {
 		String text = uiAutomation("buttons()[0]").getText();
-		System.out.println(text);
 		try {
 			return Integer.parseInt(text.split(" ")[1]);
 		} catch (IndexOutOfBoundsException e) {
