@@ -133,7 +133,7 @@ public class SearchPageObject extends MasterPageObject {
 		public RadiusPageObject select(int index){
 			
 			uiAutomation("tableViews()[0].visibleCells()[" + index + "]").click();
-			waitMsec(500);
+			waitMsec(700);
 			return this;
 		}
 		
@@ -157,7 +157,7 @@ public class SearchPageObject extends MasterPageObject {
 	public int getSearchResult() {
 		String text = uiAutomation("buttons()[0]").getText();
 		try {
-			return Integer.parseInt(text.split(" ")[1]);
+			return Integer.parseInt(text.split(" ")[1].replace(",", "").replace("'", ""));
 		} catch (IndexOutOfBoundsException e) {
 			return 0;
 		}

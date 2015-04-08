@@ -75,7 +75,6 @@ public class AppTest extends TestBase {
 				collector.checkThat("Radius at index" + i
 						+ "has the same number of hit with the last index",
 						searchPage.hitNumber, is(not(lastHit)));
-
 			}
 
 		});
@@ -90,10 +89,8 @@ public class AppTest extends TestBase {
 
 	@Test
 	public void loginPageManipulation() {
-		startIOSMobileTest(driver -> {
-			loginPage = new LoginPageObject(driver).open().loginSection()
-					.fillName("huyhua@nhatvietgroup.com.vn")
-					.fillPassword("123456").login().waitForLogin();
+		startIOSMobileTestWithLogin("huyhua@nhatvietgroup.com.vn", "123456", driver ->{
+			
 		});
 	}
 
