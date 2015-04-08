@@ -21,17 +21,17 @@ public class AppTest extends TestBase {
 	private LoginPageObject loginPage;
 
 	@Test
-	public void testCase1() {
+	public void testSuite1() {
 
 		// Test case 2.1
 		startIOSMobileTest(driver -> {
 			searchPage = new SearchPageObject(driver).where("Zurich");
 
-			collector.checkThat("City Area tab isn't available.",
+			collector.checkThat("2.1:City Area tab isn't available.",
 					uiAutomation("tableViews()[0].cells()[\"City areas\"]")
 							.isDisplayed(), is(true));
 
-			collector.checkThat("City Area tab is empty", searchPage.cityArea
+			collector.checkThat("2.1:City Area tab is empty", searchPage.cityArea
 					.open().getAll().isEmpty(), is(false));
 			searchPage.back();
 			waitMsec(500);
@@ -49,7 +49,7 @@ public class AppTest extends TestBase {
 															// number
 
 			collector.checkThat(
-					"Search result: didn't change after changing district",
+					"2.2:Search result: didn't change after changing district",
 					originalHit, is(not(searchPage.hitNumber)));
 
 			searchPage = searchPage.cityArea("District 1"); // Uncheck it
@@ -72,23 +72,25 @@ public class AppTest extends TestBase {
 
 				int lastHit = searchPage.hitNumber;
 				searchPage = searchPage.radius(i);
-				collector.checkThat("Radius at index" + i
+				collector.checkThat("2.3:Radius at index" + i
 						+ "has the same number of hit with the last index",
 						searchPage.hitNumber, is(not(lastHit)));
 			}
 
 		});
+		
+		// 2.4
 	}
 
 	@Test
-	public void testCase2() {
+	public void testSuite2() {
 		startIOSMobileTest(driver -> {
 
 		});
 	}
 
 	@Test
-	public void loginPageManipulation() {
+	public void testSuite3() {
 		startIOSMobileTestWithLogin("huyhua@nhatvietgroup.com.vn", "123456", driver ->{
 			
 		});
