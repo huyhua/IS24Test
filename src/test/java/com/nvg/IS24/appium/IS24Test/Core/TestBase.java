@@ -6,8 +6,14 @@ import io.appium.java_client.ios.IOSDriver;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
+import org.junit.Rule;
+import org.junit.rules.ErrorCollector;
+
 
 public abstract class TestBase extends AppiumSetup {
+	
+	@Rule
+    public ErrorCollector collector = new ErrorCollector();
 	
 	public void startIOSMobileTest(Consumer<IOSDriver> action){
 		
@@ -16,7 +22,11 @@ public abstract class TestBase extends AppiumSetup {
 			
 	};
 	
-	public void bypassInitialScreens(){
+	public void continueCurrentIOSMobileTest(Consumer<IOSDriver> action){
+		action.accept(driver);
+	}
+	
+	private void bypassInitialScreens(){
 		driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 		try {
 			driver.findElementByIosUIAutomation("UIATarget.localTarget().frontMostApp().alert().buttons()[\"Ignore\"]").click();;

@@ -2,16 +2,25 @@ package com.nvg.IS24.appium.pageObject;
 
 import static com.nvg.IS24.appium.IS24Test.Core.Helpers.for_tags;
 import static com.nvg.IS24.appium.IS24Test.Core.Helpers.uiAutomation;
+import static com.nvg.IS24.appium.IS24Test.Core.Helpers.uiAutomations;
 import static com.nvg.IS24.appium.IS24Test.Core.Helpers.waitMsec;
 import static com.nvg.IS24.appium.IS24Test.Core.Helpers.waitSec;
+import io.appium.java_client.MobileElement;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
 
+import java.util.List;
+
 public class SearchPageObject extends MasterPageObject {
+
+	public int hitNumber;
+	public CityAreaPageObject cityArea;
 
 	public SearchPageObject(IOSDriver driver) {
 		super(driver);
 		setPageIdentifier(for_tags("UIANavigationBar"));
+		cityArea = new CityAreaPageObject(driver);
+		hitNumber = getSearchResult();
 	}
 
 	public SearchPageObject open() {
@@ -52,6 +61,39 @@ public class SearchPageObject extends MasterPageObject {
 		return new SearchPageObject(driver);
 	}
 
+	public class CityAreaPageObject extends PageElementObjectBase {
+
+		public CityAreaPageObject(IOSDriver driver) {
+			super(driver);
+		}
+
+		public CityAreaPageObject open() {
+
+			uiAutomation("tableViews()[0].cells()[\"City areas\"]").click();
+			waitSec(1);
+			return new CityAreaPageObject(driver);
+		}
+
+		public List<MobileElement> getDistricts() {
+			return uiAutomations("tableViews()[0].cells().withPredicate(\"name beginswith 'District'\")");
+		}
+
+		public List<MobileElement> getAll() {
+			return uiAutomations("tableViews()[0].cells()");
+		}
+
+		public List<MobileElement> getStreet() {
+			List<MobileElement> all = uiAutomations("tableViews()[0].cells()");
+			all.forEach((cell) -> {
+				if (cell.getText().contains("District")) {
+					all.remove(cell);
+				}
+			});
+
+			return all;
+		}
+	}
+
 	public SearchPageObject cityArea(String area) {
 
 		uiAutomation("tableViews()[0].cells()[\"City areas\"]").click();
@@ -78,6 +120,15 @@ public class SearchPageObject extends MasterPageObject {
 		waitMsec(500);
 
 		return this;
+	}
+
+	public int getSearchResult() {
+		String text = uiAutomation("buttons()[0]").getText();
+		try {
+			return Integer.parseInt(text.split(" ")[1]);
+		} catch (IndexOutOfBoundsException e) {
+			return 0;
+		}
 	}
 
 }
