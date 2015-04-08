@@ -33,8 +33,8 @@ public class AppTest extends TestBase {
 					uiAutomation("tableViews()[0].cells()[\"City areas\"]")
 							.isDisplayed(), is(true));
 
-			collector.checkThat("2.1:City Area tab is empty", searchPage.cityArea
-					.open().getAll().isEmpty(), is(false));
+			collector.checkThat("2.1:City Area tab is empty",
+					searchPage.cityArea.open().getAll().isEmpty(), is(false));
 			searchPage.back();
 			waitMsec(500);
 		});
@@ -80,9 +80,9 @@ public class AppTest extends TestBase {
 			}
 
 		});
-		
+
 		// 2.4
-		
+
 	}
 
 	@Test
@@ -96,13 +96,14 @@ public class AppTest extends TestBase {
 	@Test
 	@Ignore
 	public void testSuite3() {
-		startIOSMobileTestWithLogin("huyhua@nhatvietgroup.com.vn", "123456", driver ->{
-			
-		});
+		startIOSMobileTestWithLogin("huyhua@nhatvietgroup.com.vn", "123456",
+				driver -> {
+
+				});
 	}
-	
+
 	@Test
-	public void AccessibilityTest(){
+	public void AccessibilityTest() {
 		startIOSMobileTest(driver -> {
 			driver.findElementByAccessibilityId("Global_BtnMenu").click();
 			waitMsec(10000);

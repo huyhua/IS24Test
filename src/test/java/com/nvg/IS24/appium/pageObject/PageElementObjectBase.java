@@ -9,5 +9,5 @@ public abstract class PageElementObjectBase extends PageObjectBase {
 		super(driver);
 		this.driver = driver;
 	}
-    
+
 }

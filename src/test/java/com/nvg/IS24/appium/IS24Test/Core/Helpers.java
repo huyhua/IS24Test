@@ -57,7 +57,6 @@ public abstract class Helpers {
 	public static MobileElement element(By locator) {
 		return w(driver.findElement(locator));
 	}
-	
 
 	/**
 	 * return all child elements of an element by locator
@@ -95,16 +94,20 @@ public abstract class Helpers {
 	public static By for_tags(String tagName) {
 		return By.className(tagName);
 	}
-	
+
 	/**
 	 * Return element using uiAutomation strategy
 	 */
-	public static MobileElement uiAutomation(String path){
-		return w(driver.findElementByIosUIAutomation("UIATarget.localTarget().frontMostApp().mainWindow()." + path));
+	public static MobileElement uiAutomation(String path) {
+		return w(driver
+				.findElementByIosUIAutomation("UIATarget.localTarget().frontMostApp().mainWindow()."
+						+ path));
 	}
-	
-	public static List<MobileElement> uiAutomations(String path){
-		return w(driver.findElementsByIosUIAutomation("UIATarget.localTarget().frontMostApp().mainWindow()." + path));
+
+	public static List<MobileElement> uiAutomations(String path) {
+		return w(driver
+				.findElementsByIosUIAutomation("UIATarget.localTarget().frontMostApp().mainWindow()."
+						+ path));
 	}
 
 	/**
@@ -127,20 +130,20 @@ public abstract class Helpers {
 	public static MobileElement text(String text) {
 		return element(for_text(text));
 	}
-	
-	public static List<MobileElement> texts(String text){
+
+	public static List<MobileElement> texts(String text) {
 		return elements(for_text(text));
 	}
 
 	public static MobileElement button(String text) {
 		return element(for_button_text(text));
 	}
-	
-	public static MobileElement textAndTag(String tag, String text){
+
+	public static MobileElement textAndTag(String tag, String text) {
 		return element(for_text_and_tag(tag, text));
 	}
-	
-	public static List<MobileElement> textAndTags(String tag, String text){
+
+	public static List<MobileElement> textAndTags(String tag, String text) {
 		return elements(for_text_and_tag(tag, text));
 	}
 
@@ -158,10 +161,10 @@ public abstract class Helpers {
 			}
 		});
 	}
-	
-	
+
 	/**
-	 * Rather than the set value method, this fills text using Keyboard. Slow but sure.
+	 * Rather than the set value method, this fills text using Keyboard. Slow
+	 * but sure.
 	 */
 	public static void typeKeyboard(String text) {
 		String[] fracture = text.split("");
@@ -169,15 +172,15 @@ public abstract class Helpers {
 			driver.getKeyboard().sendKeys(fracture[i]);
 		}
 	}
-	
+
 	/**
 	 * Use the keyboard to delete text instead of Appium Default method
 	 */
-	public static void clearText(By locator){
+	public static void clearText(By locator) {
 		MobileElement element = element(locator);
 		String text = element.getText();
-		
-		for(int i = 0; i < text.length(); i++){
+
+		for (int i = 0; i < text.length(); i++) {
 			driver.getKeyboard().sendKeys(Keys.BACK_SPACE);
 		}
 	}
@@ -189,14 +192,16 @@ public abstract class Helpers {
 		String up = text.toUpperCase();
 		String down = text.toLowerCase();
 		return By
-				.xpath("//*[@visible=\"true\" and (contains(translate(@name,\"" + up
-        + "\",\"" + down + "\"), \"" + down + "\") or contains(translate(@hint,\"" + up
-        + "\",\"" + down + "\"), \"" + down + "\") or contains(translate(@label,\"" + up
-        + "\",\"" + down + "\"), \"" + down + "\") or contains(translate(@value,\"" + up
-        + "\",\"" + down + "\"), \"" + down + "\"))]");
+				.xpath("//*[@visible=\"true\" and (contains(translate(@name,\""
+						+ up + "\",\"" + down + "\"), \"" + down
+						+ "\") or contains(translate(@hint,\"" + up + "\",\""
+						+ down + "\"), \"" + down
+						+ "\") or contains(translate(@label,\"" + up + "\",\""
+						+ down + "\"), \"" + down
+						+ "\") or contains(translate(@value,\"" + up + "\",\""
+						+ down + "\"), \"" + down + "\"))]");
 	}
 
-	
 	/**
 	 * Return button that matches the text
 	 */
@@ -204,30 +209,48 @@ public abstract class Helpers {
 		String up = text.toUpperCase();
 		String down = text.toLowerCase();
 		return By
-				.xpath("//UIAButton[@visible=\"true\" and (contains(translate(@name,\"" + up
-        + "\",\"" + down + "\"), \"" + down + "\") or contains(translate(@hint,\"" + up
-        + "\",\"" + down + "\"), \"" + down + "\") or contains(translate(@label,\"" + up
-        + "\",\"" + down + "\"), \"" + down + "\") or contains(translate(@value,\"" + up
-        + "\",\"" + down + "\"), \"" + down + "\"))]");
+				.xpath("//UIAButton[@visible=\"true\" and (contains(translate(@name,\""
+						+ up
+						+ "\",\""
+						+ down
+						+ "\"), \""
+						+ down
+						+ "\") or contains(translate(@hint,\""
+						+ up
+						+ "\",\""
+						+ down
+						+ "\"), \""
+						+ down
+						+ "\") or contains(translate(@label,\""
+						+ up
+						+ "\",\""
+						+ down
+						+ "\"), \""
+						+ down
+						+ "\") or contains(translate(@value,\""
+						+ up
+						+ "\",\""
+						+ down + "\"), \"" + down + "\"))]");
 	}
-	
+
 	/**
 	 * 
 	 * @param tag
 	 * @param text
 	 * @return Mobile Element that matches both tag and text name
 	 */
-	public static By for_text_and_tag(String tag, String text){
+	public static By for_text_and_tag(String tag, String text) {
 		String up = text.toUpperCase();
 		String down = text.toLowerCase();
-		return By
-				.xpath("//"+tag+"[@visible=\"true\" and (contains(translate(@name,\"" + up
-        + "\",\"" + down + "\"), \"" + down + "\") or contains(translate(@hint,\"" + up
-        + "\",\"" + down + "\"), \"" + down + "\") or contains(translate(@label,\"" + up
-        + "\",\"" + down + "\"), \"" + down + "\") or contains(translate(@value,\"" + up
-        + "\",\"" + down + "\"), \"" + down + "\"))]");
+		return By.xpath("//" + tag
+				+ "[@visible=\"true\" and (contains(translate(@name,\"" + up
+				+ "\",\"" + down + "\"), \"" + down
+				+ "\") or contains(translate(@hint,\"" + up + "\",\"" + down
+				+ "\"), \"" + down + "\") or contains(translate(@label,\"" + up
+				+ "\",\"" + down + "\"), \"" + down
+				+ "\") or contains(translate(@value,\"" + up + "\",\"" + down
+				+ "\"), \"" + down + "\"))]");
 	}
-	
 
 	/**
 	 * Return a static text element by exact text *
@@ -235,8 +258,8 @@ public abstract class Helpers {
 	public static MobileElement text_exact(String text) {
 		return element(for_text_exact(text));
 	}
-	
-	public static List<MobileElement> text_exacts(String text){
+
+	public static List<MobileElement> text_exacts(String text) {
 		return elements(for_text_exact(text));
 	}
 
@@ -264,7 +287,7 @@ public abstract class Helpers {
 		return w(driverWait.until(ExpectedConditions
 				.visibilityOfAllElementsLocatedBy(locator)));
 	}
-	
+
 	/**
 	 * Sleep the thread for an amount of time
 	 */
@@ -275,7 +298,7 @@ public abstract class Helpers {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Sleep the thread for an amount of time
 	 */
@@ -286,13 +309,13 @@ public abstract class Helpers {
 			e.printStackTrace();
 		}
 	}
-	
-	public static void tryAction(Consumer<IOSDriver> action){
+
+	public static void tryAction(Consumer<IOSDriver> action) {
 		try {
 			driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 			action.accept(driver);
-		} catch (Exception e) {		
-		} finally{
+		} catch (Exception e) {
+		} finally {
 			driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 		}
 	}

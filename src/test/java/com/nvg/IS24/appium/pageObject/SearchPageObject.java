@@ -94,9 +94,9 @@ public class SearchPageObject extends MasterPageObject {
 
 			return all;
 		}
-		
-		public CityAreaPageObject select(String area){
-			
+
+		public CityAreaPageObject select(String area) {
+
 			uiAutomation("tableViews()[0].cells()[\"" + area + "\"]").click();
 			done();
 			waitMsec(500);
@@ -106,43 +106,42 @@ public class SearchPageObject extends MasterPageObject {
 
 	public SearchPageObject cityArea(String area) {
 
-		cityArea.open()
-		.select(area);
-		
+		cityArea.open().select(area);
+
 		return new SearchPageObject(driver);
 	}
 
-	public class RadiusPageObject extends PageElementObjectBase{
+	public class RadiusPageObject extends PageElementObjectBase {
 
 		public RadiusPageObject(IOSDriver driver) {
 			super(driver);
-			
+
 		}
-		
-		public RadiusPageObject open(){
-			
+
+		public RadiusPageObject open() {
+
 			uiAutomation("tableViews()[0].cells()[\"Radius\"]").click();
 			waitMsec(500);
 			return this;
 		}
-		
-		public List<MobileElement> getRadius(){
+
+		public List<MobileElement> getRadius() {
 			return uiAutomations("tableViews()[0].visibleCells()");
 		}
-		
-		public RadiusPageObject select(int index){
-			
-			uiAutomation("tableViews()[0].visibleCells()[" + index + "]").click();
+
+		public RadiusPageObject select(int index) {
+
+			uiAutomation("tableViews()[0].visibleCells()[" + index + "]")
+					.click();
 			waitMsec(700);
 			return this;
 		}
-		
+
 	}
-	
+
 	public SearchPageObject radius(int index) {
 
-		radius.open()
-		.select(index);
+		radius.open().select(index);
 		return new SearchPageObject(driver);
 	}
 
@@ -157,7 +156,8 @@ public class SearchPageObject extends MasterPageObject {
 	public int getSearchResult() {
 		String text = uiAutomation("buttons()[0]").getText();
 		try {
-			return Integer.parseInt(text.split(" ")[1].replace(",", "").replace("'", ""));
+			return Integer.parseInt(text.split(" ")[1].replace(",", "")
+					.replace("'", ""));
 		} catch (IndexOutOfBoundsException e) {
 			return 0;
 		}
