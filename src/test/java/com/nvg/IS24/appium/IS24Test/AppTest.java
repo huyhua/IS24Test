@@ -2,7 +2,6 @@ package com.nvg.IS24.appium.IS24Test;
 
 import static com.nvg.IS24.appium.IS24Test.Core.Helpers.uiAutomation;
 
-import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import static org.hamcrest.CoreMatchers.*;
@@ -25,7 +24,7 @@ public class AppTest extends TestBase {
 	@Test
 	public void testCase1() {
 		
-		//Test case 1.1
+		//Test case 2.1
 		startIOSMobileTest(driver -> {
 			searchPage = new SearchPageObject(driver).where("Zurich");
 			
@@ -38,7 +37,7 @@ public class AppTest extends TestBase {
 			waitMsec(500);
 		});
 		
-		//Test case 1.2, reusing current session to avoid losing time
+		//Test case 2.2, reusing current session to avoid losing time
 		continueCurrentIOSMobileTest(driver ->{
 			int originalHit;
 			

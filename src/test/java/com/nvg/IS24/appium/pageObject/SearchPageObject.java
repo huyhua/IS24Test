@@ -124,6 +124,7 @@ public class SearchPageObject extends MasterPageObject {
 
 	public int getSearchResult() {
 		String text = uiAutomation("buttons()[0]").getText();
+		System.out.println(text);
 		try {
 			return Integer.parseInt(text.split(" ")[1]);
 		} catch (IndexOutOfBoundsException e) {
