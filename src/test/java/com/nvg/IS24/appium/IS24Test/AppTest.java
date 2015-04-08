@@ -5,6 +5,7 @@ import static com.nvg.IS24.appium.IS24Test.Core.Helpers.waitMsec;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.nvg.IS24.appium.IS24Test.Core.TestBase;
@@ -21,6 +22,7 @@ public class AppTest extends TestBase {
 	private LoginPageObject loginPage;
 
 	@Test
+	@Ignore
 	public void testSuite1() {
 
 		// Test case 2.1
@@ -83,6 +85,7 @@ public class AppTest extends TestBase {
 	}
 
 	@Test
+	@Ignore
 	public void testSuite2() {
 		startIOSMobileTest(driver -> {
 
@@ -90,9 +93,18 @@ public class AppTest extends TestBase {
 	}
 
 	@Test
+	@Ignore
 	public void testSuite3() {
 		startIOSMobileTestWithLogin("huyhua@nhatvietgroup.com.vn", "123456", driver ->{
 			
+		});
+	}
+	
+	@Test
+	public void AccessibilityTest(){
+		startIOSMobileTest(driver -> {
+			driver.findElementByAccessibilityId("Global_BtnMenu").click();
+			waitMsec(10000);
 		});
 	}
 
