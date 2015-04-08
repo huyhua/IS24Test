@@ -32,9 +32,9 @@ public abstract class TestBase extends AppiumSetup {
 	public void startIOSMobileTestWithLogin(String username, String password, Consumer<IOSDriver> action){
 		
 		bypassInitialScreens();	
-		loginPage = new LoginPageObject(driver).open().loginSection()
-				.fillName(username)
-				.fillPassword(password).login().waitForLogin();
+		loginPage = new LoginPageObject(driver).open()
+				.loginWith(username, password);
+
 		loginPage.menuPage.search();
 		action.accept(driver);
 		

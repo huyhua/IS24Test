@@ -6,6 +6,8 @@ import io.appium.java_client.ios.IOSDriver;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -282,6 +284,16 @@ public abstract class Helpers {
 			Thread.sleep(sec * 1000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public static void tryAction(Consumer<IOSDriver> action){
+		try {
+			driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+			action.accept(driver);
+		} catch (Exception e) {		
+		} finally{
+			driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 		}
 	}
 }
