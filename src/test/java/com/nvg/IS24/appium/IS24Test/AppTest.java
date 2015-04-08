@@ -63,7 +63,6 @@ public class AppTest extends TestBase {
 	}
 
 	@Test
-	@Ignore
 	public void loginPageManipulation() {
 		startIOSMobileTest(driver -> {
 			loginPage = new LoginPageObject(driver).open().loginSection()
