@@ -3,6 +3,8 @@ package com.nvg.IS24.appium.pageObject;
 import static com.nvg.IS24.appium.IS24Test.Core.Helpers.for_text;
 import static com.nvg.IS24.appium.IS24Test.Core.Helpers.uiAutomation;
 import static com.nvg.IS24.appium.IS24Test.Core.Helpers.waitMsec;
+
+import io.appium.java_client.MobileElement;
 import io.appium.java_client.ios.IOSDriver;
 
 public abstract class MasterPageObject extends PageObjectBase {
@@ -14,17 +16,20 @@ public abstract class MasterPageObject extends PageObjectBase {
 
 	}
 
+	public MobileElement NavItem(String locator) {
+		return (MobileElement) driver
+				.findElementByIosUIAutomation("UIATarget.localTarget().frontMostApp().navigationBar()."
+						+ locator);
+
+	}
+
 	public MasterPageObject done() {
-		driver.findElementByIosUIAutomation(
-				"UIATarget.localTarget().frontMostApp().navigationBar().rightButton()")
-				.click();
+		NavItem("rightButton()").click();
 		return this;
 	}
 
 	public MasterPageObject back() {
-		driver.findElementByIosUIAutomation(
-				"UIATarget.localTarget().frontMostApp().navigationBar().leftButton()")
-				.click();
+		NavItem("leftButton()").click();
 		return this;
 	}
 

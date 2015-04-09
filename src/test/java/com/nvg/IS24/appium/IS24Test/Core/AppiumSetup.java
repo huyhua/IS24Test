@@ -33,6 +33,7 @@ public class AppiumSetup implements SauceOnDemandSessionIdProvider {
 	}
 
 	private boolean runOnSauce = System.getProperty("sauce") != null;
+	private boolean jenkins = System.getProperty("jenkins") != null;
 
 	/**
 	 * Authenticate to Sauce with environment variables SAUCE_USER_NAME and
@@ -77,9 +78,16 @@ public class AppiumSetup implements SauceOnDemandSessionIdProvider {
 		capabilities.setCapability("platformVersion", "8.2");
 		capabilities.setCapability("platformName", "ios");
 		capabilities.setCapability("deviceName", "iPhone Simulator");
-
-		String userDir = System.getProperty("user.dir");
-		String localApp = "ImmoScout24Alpha.zip";
+		String userDir;
+		String localApp;
+		
+		if(jenkins){
+			throw new IllegalArgumentException("Not Implemented");
+		}else{
+			userDir = System.getProperty("user.dir");
+			localApp = "ImmoScout24Alpha.zip";
+		}
+		
 		if (runOnSauce) {
 			String user = auth.getUsername();
 			String key = auth.getAccessKey();

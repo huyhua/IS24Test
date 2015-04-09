@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import com.nvg.IS24.appium.IS24Test.Core.TestBase;
 import com.nvg.IS24.appium.pageObject.LoginPageObject;
+import com.nvg.IS24.appium.pageObject.SearchListPageObject;
 import com.nvg.IS24.appium.pageObject.SearchPageObject;
 
 /**
@@ -20,6 +21,7 @@ public class AppTest extends TestBase {
 	private SearchPageObject searchPage;
 	@SuppressWarnings("unused")
 	private LoginPageObject loginPage;
+	private SearchListPageObject searchlist;
 
 	@Test
 	@Ignore
@@ -105,8 +107,11 @@ public class AppTest extends TestBase {
 	@Test
 	public void AccessibilityTest() {
 		startIOSMobileTest(driver -> {
-			driver.findElementByAccessibilityId("Global_BtnMenu").click();
-			waitMsec(10000);
+			searchPage = new SearchPageObject(driver)
+			.cityArea("Zurich")
+			.search();
+			
+			
 		});
 	}
 
