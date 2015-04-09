@@ -5,6 +5,8 @@ import static com.nvg.IS24.appium.IS24Test.Core.Helpers.uiAutomation;
 import static com.nvg.IS24.appium.IS24Test.Core.Helpers.uiAutomations;
 import static com.nvg.IS24.appium.IS24Test.Core.Helpers.waitMsec;
 import static com.nvg.IS24.appium.IS24Test.Core.Helpers.waitSec;
+import static com.nvg.IS24.appium.IS24Test.Core.Helpers.accessibilityId;
+
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
@@ -34,7 +36,7 @@ public class SearchPageObject extends MasterPageObject {
 
 	public SearchPageObject buyWhat(int index) {
 
-		uiAutomation("tableViews()[0].buttons()[\"New search\"]").click();
+		accessibilityId("Search_BtnWhat").click();
 		uiAutomation("tableViews()[0].buttons()[\"Buy\"]").click();
 		uiAutomation("tableViews()[0].visibleCells()[" + index + "]").click();
 		waitMsec(500);
@@ -43,7 +45,7 @@ public class SearchPageObject extends MasterPageObject {
 
 	public SearchPageObject rentWhat(int index) {
 
-		uiAutomation("tableViews()[0].buttons()[\"New search\"]").click();
+		accessibilityId("Search_BtnWhat").click();
 		uiAutomation("tableViews()[0].buttons()[\"Rent\"]").click();
 		uiAutomation("tableViews()[0].visibleCells()[" + index + "]").click();
 		waitMsec(500);
@@ -52,7 +54,7 @@ public class SearchPageObject extends MasterPageObject {
 
 	public SearchPageObject where(String location) {
 
-		uiAutomation("tableViews()[0].cells()[\"Where\"]").click();
+		accessibilityId("Search_BtnWhere").click();
 		IOSElement searchBar = (IOSElement) driver
 				.findElementByIosUIAutomation("UIATarget.localTarget().frontMostApp().navigationBar().searchBars()[0].searchBars()[0]");
 		searchBar.setValue(location);
@@ -71,7 +73,7 @@ public class SearchPageObject extends MasterPageObject {
 
 		public CityAreaPageObject open() {
 
-			uiAutomation("tableViews()[0].cells()[\"City areas\"]").click();
+			uiAutomation("tableViews()[0].cells()[2]").click();
 			waitSec(1);
 			return new CityAreaPageObject(driver);
 		}
@@ -120,7 +122,7 @@ public class SearchPageObject extends MasterPageObject {
 
 		public RadiusPageObject open() {
 
-			uiAutomation("tableViews()[0].cells()[\"Radius\"]").click();
+			accessibilityId("Search_BtnRadius").click();
 			waitMsec(500);
 			return this;
 		}
@@ -147,14 +149,20 @@ public class SearchPageObject extends MasterPageObject {
 
 	public SearchPageObject search() {
 
-		uiAutomation("buttons()[0]").click();
+		accessibilityId("Search_BtnSearch").click();
 		waitMsec(500);
 
 		return this;
 	}
+	
+	public SearchPageObject resetSearch(){
+		NavItem("rightButton()").click();
+		driver.findElementByIosUIAutomation("UIATarget.localTarget().frontMostApp().alert().buttons()[\"Reset\"]").click();
+		return new SearchPageObject(driver);
+	}
 
 	public int getSearchResult() {
-		String text = uiAutomation("buttons()[0]").getText();
+		String text = accessibilityId("Search_BtnSearch").getText();
 		try {
 			return Integer.parseInt(text.split(" ")[1].replace(",", "")
 					.replace("'", ""));

@@ -85,7 +85,7 @@ public class AppiumSetup implements SauceOnDemandSessionIdProvider {
 			throw new IllegalArgumentException("Not Implemented");
 		}else{
 			userDir = System.getProperty("user.dir");
-			localApp = "ImmoScout24Alpha.zip";
+			localApp = "ImmoScout24.zip";
 		}
 		
 		if (runOnSauce) {

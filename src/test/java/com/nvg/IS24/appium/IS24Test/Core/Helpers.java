@@ -109,6 +109,10 @@ public abstract class Helpers {
 				.findElementsByIosUIAutomation("UIATarget.localTarget().frontMostApp().mainWindow()."
 						+ path));
 	}
+	
+	public static MobileElement accessibilityId(String id){
+		return w(driver.findElementByAccessibilityId(id));
+	}
 
 	/**
 	 * Return a static text element by xpath index *
