@@ -25,6 +25,7 @@ public class AppTest extends TestBase {
 	private SearchListPageObject searchList;
 
 	@Test
+	@Ignore
 	public void testSuite1() {
 
 		// Test case 2.1
@@ -88,7 +89,6 @@ public class AppTest extends TestBase {
 	}
 
 	@Test
-	@Ignore
 	public void testSuite2() {
 		startIOSMobileTest(driver -> {
 
@@ -96,6 +96,7 @@ public class AppTest extends TestBase {
 	}
 
 	@Test
+	@Ignore
 	public void testSuite3() {
 		startIOSMobileTestWithLogin("huyhua@nhatvietgroup.com.vn", "123456",
 				driver -> {
@@ -104,6 +105,7 @@ public class AppTest extends TestBase {
 	}
 
 	@Test
+	@Ignore
 	public void AccessibilityTest() {
 		startIOSMobileTest(driver -> {
 			searchPage = new SearchPageObject(driver).where("Zurich").search();

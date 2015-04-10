@@ -28,15 +28,12 @@ import com.saucelabs.saucerest.SauceREST;
 
 public class AppiumSetup implements SauceOnDemandSessionIdProvider {
 
-	protected AppiumDriver driver;
+	/** Keep the same date prefix to identify job sets. **/
+	private static Date date = new Date();
 
 	public static WebElement wait(By locator) {
 		return Helpers.wait(locator);
 	}
-
-	private boolean runOnSauce = System.getProperty("sauce") != null;
-	private boolean jenkins = System.getProperty("jenkins") != null;
-	private String platform ;
 
 	/**
 	 * Authenticate to Sauce with environment variables SAUCE_USER_NAME and
@@ -44,26 +41,13 @@ public class AppiumSetup implements SauceOnDemandSessionIdProvider {
 	 **/
 
 	private SauceOnDemandAuthentication auth = new SauceOnDemandAuthentication();
+	protected AppiumDriver driver;
+	private boolean jenkins = System.getProperty("jenkins") != null;
 
-	public String getPlatform() {
-		return platform;
-	}
-
-	public void setPlatform(String platform) {
-		this.platform = platform;
-	}
-
-	/** Report pass/fail to Sauce Labs **/
-	// false to silence Sauce connect messages.
-	public @Rule SauceOnDemandTestWatcher reportToSauce = new SauceOnDemandTestWatcher(
-			this, auth, false);
+	private String platform ;
 
 	@Rule
 	public TestRule printTests = new TestWatcher() {
-		protected void starting(Description description) {
-			System.out.print("  test: " + description.getMethodName());
-		}
-
 		protected void finished(Description description) {
 			final String session = getSessionId();
 
@@ -74,12 +58,59 @@ public class AppiumSetup implements SauceOnDemandSessionIdProvider {
 				System.out.println();
 			}
 		}
+
+		protected void starting(Description description) {
+			System.out.print("  test: " + description.getMethodName());
+		}
 	};
+
+	/** Report pass/fail to Sauce Labs **/
+	// false to silence Sauce connect messages.
+	public @Rule SauceOnDemandTestWatcher reportToSauce = new SauceOnDemandTestWatcher(
+			this, auth, false);
+
+	private boolean runOnSauce = System.getProperty("sauce") != null;
 
 	private String sessionId;
 
-	/** Keep the same date prefix to identify job sets. **/
-	private static Date date = new Date();
+	private AppiumDriver getDriver(URL serverURL,
+			DesiredCapabilities capabilities) {
+
+		switch (platform) {
+		case "ios": {
+			capabilities.setCapability("appium-version", "1.3.7");
+			capabilities.setCapability("platformVersion", "8.2");
+			capabilities.setCapability("platformName", "ios");
+			capabilities.setCapability("deviceName", "iPhone Simulator");
+			return new IOSDriver(serverURL, capabilities);
+		}
+			
+		case "android":{
+			capabilities.setCapability("name", "IS24" + date);
+			capabilities.setCapability("appium-version", "1.3.7");
+			capabilities.setCapability("platformVersion", "4.4");
+			capabilities.setCapability("platformName", "android");
+			capabilities.setCapability("deviceName", "Android Simulator");
+			capabilities.setCapability("avd", "AndroidSimulator");
+			return new AndroidDriver(serverURL, capabilities);
+		}
+			
+		default:
+			throw new IllegalArgumentException("Invalid platform");
+		}
+	}
+
+	public String getPlatform() {
+		return platform;
+	}
+
+	public String getSessionId() {
+		return runOnSauce ? sessionId : null;
+	}
+
+	public void setPlatform(String platform) {
+		this.platform = platform;
+	}
 
 	@Before
 	public void setup() throws IOException, InterruptedException {
@@ -145,36 +176,5 @@ public class AppiumSetup implements SauceOnDemandSessionIdProvider {
 	public void tearDown() throws Exception {
 		if (driver != null)
 			driver.quit();
-	}
-
-	public String getSessionId() {
-		return runOnSauce ? sessionId : null;
-	}
-
-	private AppiumDriver getDriver(URL serverURL,
-			DesiredCapabilities capabilities) {
-
-		switch (platform) {
-		case "ios": {
-			capabilities.setCapability("appium-version", "1.3.7");
-			capabilities.setCapability("platformVersion", "8.2");
-			capabilities.setCapability("platformName", "ios");
-			capabilities.setCapability("deviceName", "iPhone Simulator");
-			return new IOSDriver(serverURL, capabilities);
-		}
-			
-		case "android":{
-			capabilities.setCapability("name", "IS24" + date);
-			capabilities.setCapability("appium-version", "1.3.7");
-			capabilities.setCapability("platformVersion", "4.4");
-			capabilities.setCapability("platformName", "android");
-			capabilities.setCapability("deviceName", "Android Simulator");
-			capabilities.setCapability("avd", "2");
-			return new AndroidDriver(serverURL, capabilities);
-		}
-			
-		default:
-			throw new IllegalArgumentException("Invalid platform");
-		}
 	}
 }
