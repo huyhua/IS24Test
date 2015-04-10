@@ -21,6 +21,7 @@ public class AppTest extends TestBase {
 	private SearchPageObject searchPage;
 	@SuppressWarnings("unused")
 	private LoginPageObject loginPage;
+	@SuppressWarnings("unused")
 	private SearchListPageObject searchList;
 
 	@Test

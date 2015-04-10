@@ -36,7 +36,7 @@ public class AppiumSetup implements SauceOnDemandSessionIdProvider {
 
 	private boolean runOnSauce = System.getProperty("sauce") != null;
 	private boolean jenkins = System.getProperty("jenkins") != null;
-	private String platform = System.getProperty("platform", "ios").toLowerCase();
+	private String platform ;
 
 	/**
 	 * Authenticate to Sauce with environment variables SAUCE_USER_NAME and
@@ -44,6 +44,14 @@ public class AppiumSetup implements SauceOnDemandSessionIdProvider {
 	 **/
 
 	private SauceOnDemandAuthentication auth = new SauceOnDemandAuthentication();
+
+	public String getPlatform() {
+		return platform;
+	}
+
+	public void setPlatform(String platform) {
+		this.platform = platform;
+	}
 
 	/** Report pass/fail to Sauce Labs **/
 	// false to silence Sauce connect messages.
@@ -75,12 +83,10 @@ public class AppiumSetup implements SauceOnDemandSessionIdProvider {
 
 	@Before
 	public void setup() throws IOException, InterruptedException {
+		
+		setPlatform(System.getProperty("platform", "ios").toLowerCase());
 		DesiredCapabilities capabilities = new DesiredCapabilities();
-		capabilities.setCapability("name", "IS24" + date);
-		capabilities.setCapability("appium-version", "1.3.7");
-		capabilities.setCapability("platformVersion", "8.2");
-		capabilities.setCapability("platformName", "ios");
-		capabilities.setCapability("deviceName", "iPhone Simulator");
+		
 		String userDir;
 		String localApp;
 		URL serverURL;
@@ -90,13 +96,18 @@ public class AppiumSetup implements SauceOnDemandSessionIdProvider {
 		} else {
 			userDir = System.getProperty("user.dir");
 			localApp = "ImmoScout24.zip";
-			if (platform.equals("ios")) {
+
+			switch (platform) {
+			case "ios":
 				localApp = "ImmoScout24.zip";
-			} else if (platform.equals("android")) {
+				break;
+			case "android":
 				localApp = "ImmoScout24.apk";
-			} else {
+				break;
+			default:
 				throw new IllegalArgumentException("Invalid platform");
 			}
+
 		}
 
 		if (runOnSauce) {
@@ -107,7 +118,8 @@ public class AppiumSetup implements SauceOnDemandSessionIdProvider {
 			SauceREST rest = new SauceREST(user, key);
 
 			rest.uploadFile(new File(userDir, localApp), localApp);
-
+			
+			capabilities.setCapability("name", "IS24" + date);
 			capabilities.setCapability("app", "sauce-storage:" + localApp);
 			serverURL = new URL("http://" + user + ":" + key
 					+ "@ondemand.saucelabs.com:80/wd/hub");
@@ -141,12 +153,28 @@ public class AppiumSetup implements SauceOnDemandSessionIdProvider {
 
 	private AppiumDriver getDriver(URL serverURL,
 			DesiredCapabilities capabilities) {
-		if (platform.equals("ios")) {
+
+		switch (platform) {
+		case "ios": {
+			capabilities.setCapability("appium-version", "1.3.7");
+			capabilities.setCapability("platformVersion", "8.2");
+			capabilities.setCapability("platformName", "ios");
+			capabilities.setCapability("deviceName", "iPhone Simulator");
 			return new IOSDriver(serverURL, capabilities);
-		} else if (platform.equals("android")) {
+		}
+			
+		case "android":{
+			capabilities.setCapability("name", "IS24" + date);
+			capabilities.setCapability("appium-version", "1.3.7");
+			capabilities.setCapability("platformVersion", "4.4");
+			capabilities.setCapability("platformName", "android");
+			capabilities.setCapability("deviceName", "Android Simulator");
+			capabilities.setCapability("avd", "2");
 			return new AndroidDriver(serverURL, capabilities);
-		} else {
+		}
+			
+		default:
 			throw new IllegalArgumentException("Invalid platform");
 		}
-	};
+	}
 }
