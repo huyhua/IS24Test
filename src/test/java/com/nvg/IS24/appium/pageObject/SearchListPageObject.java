@@ -4,8 +4,8 @@ import static com.nvg.IS24.appium.IS24Test.Core.Helpers.for_text;
 import static com.nvg.IS24.appium.IS24Test.Core.Helpers.uiAutomation;
 import static com.nvg.IS24.appium.IS24Test.Core.Helpers.uiAutomations;
 import static com.nvg.IS24.appium.IS24Test.Core.Helpers.waitMsec;
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
-import io.appium.java_client.ios.IOSDriver;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ public class SearchListPageObject extends MasterPageObject {
 
 	public List<MobileElement> items;
 
-	public SearchListPageObject(IOSDriver driver) {
+	public SearchListPageObject(AppiumDriver driver) {
 		super(driver);
 		setPageIdentifier(for_text("results"));
 		items = getActiveItems();

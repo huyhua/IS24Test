@@ -1,6 +1,7 @@
 package com.nvg.IS24.appium.IS24Test.Core;
 
 import static com.nvg.IS24.appium.IS24Test.Core.Helpers.waitSec;
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.ios.IOSDriver;
 
 import java.util.concurrent.TimeUnit;
@@ -17,19 +18,19 @@ public abstract class TestBase extends AppiumSetup {
 	@Rule
 	public ErrorCollector collector = new ErrorCollector();
 
-	public void startIOSMobileTest(Consumer<IOSDriver> action) {
+	public void startIOSMobileTest(Consumer<AppiumDriver> action) {
 
 		bypassInitialScreens();
 		action.accept(driver);
 
 	};
 
-	public void continueCurrentIOSMobileTest(Consumer<IOSDriver> action) {
+	public void continueCurrentIOSMobileTest(Consumer<AppiumDriver> action) {
 		action.accept(driver);
 	}
 
 	public void startIOSMobileTestWithLogin(String username, String password,
-			Consumer<IOSDriver> action) {
+			Consumer<AppiumDriver> action) {
 
 		bypassInitialScreens();
 		loginPage = new LoginPageObject(driver).open().loginWith(username,
@@ -43,8 +44,9 @@ public abstract class TestBase extends AppiumSetup {
 	private void bypassInitialScreens() {
 		driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 		try {
-			driver.findElementByIosUIAutomation(
-					"UIATarget.localTarget().frontMostApp().alert().buttons()[\"Ignore\"]")
+			((IOSDriver) driver)
+					.findElementByIosUIAutomation(
+							"UIATarget.localTarget().frontMostApp().alert().buttons()[\"Ignore\"]")
 					.click();
 			;
 		} catch (Exception e) {
@@ -53,8 +55,9 @@ public abstract class TestBase extends AppiumSetup {
 		}
 		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		try {
-			driver.findElementByIosUIAutomation(
-					"UIATarget.localTarget().frontMostApp().alert().buttons()[\"English\"]")
+			((IOSDriver) driver)
+					.findElementByIosUIAutomation(
+							"UIATarget.localTarget().frontMostApp().alert().buttons()[\"English\"]")
 					.click();
 			;
 		} catch (Exception e) {

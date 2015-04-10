@@ -31,8 +31,8 @@ public class AppTest extends TestBase {
 			searchPage = new SearchPageObject(driver).where("Zurich");
 
 			collector.checkThat("2.1:City Area tab isn't available.",
-					uiAutomation("tableViews()[0].cells()[2]")
-							.isDisplayed(), is(true));
+					uiAutomation("tableViews()[0].cells()[2]").isDisplayed(),
+					is(true));
 
 			collector.checkThat("2.1:City Area tab is empty",
 					searchPage.cityArea.open().getAll().isEmpty(), is(false));
@@ -105,13 +105,9 @@ public class AppTest extends TestBase {
 	@Test
 	public void AccessibilityTest() {
 		startIOSMobileTest(driver -> {
-			searchPage = new SearchPageObject(driver)
-			.where("Zurich")
-			.search();
-			searchList = new SearchListPageObject(driver)
-			.open()
-			.clickItem(1);
-			
+			searchPage = new SearchPageObject(driver).where("Zurich").search();
+			searchList = new SearchListPageObject(driver).open().clickItem(1);
+
 		});
 	}
 

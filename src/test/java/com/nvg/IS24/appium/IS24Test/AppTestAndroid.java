@@ -1,7 +1,6 @@
 package com.nvg.IS24.appium.IS24Test;
 
 import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.ios.IOSDriver;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,6 +18,8 @@ import org.junit.runner.Description;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.nvg.IS24.appium.IS24Test.Core.Helpers;
 import com.saucelabs.common.SauceOnDemandAuthentication;
@@ -26,7 +27,7 @@ import com.saucelabs.common.SauceOnDemandSessionIdProvider;
 import com.saucelabs.junit.SauceOnDemandTestWatcher;
 import com.saucelabs.saucerest.SauceREST;
 
-public class AppTestAndroid implements SauceOnDemandSessionIdProvider{
+public class AppTestAndroid implements SauceOnDemandSessionIdProvider {
 
 	protected AndroidDriver driver;
 
@@ -83,14 +84,14 @@ public class AppTestAndroid implements SauceOnDemandSessionIdProvider{
 		capabilities.setCapability("avd", "2");
 		String userDir;
 		String localApp;
-		
-		if(jenkins){
+
+		if (jenkins) {
 			throw new IllegalArgumentException("Not Implemented");
-		}else{
+		} else {
 			userDir = System.getProperty("user.dir");
 			localApp = "ImmoScout24.apk";
 		}
-		
+
 		if (runOnSauce) {
 			String user = auth.getUsername();
 			String key = auth.getAccessKey();
@@ -117,12 +118,39 @@ public class AppTestAndroid implements SauceOnDemandSessionIdProvider{
 
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 	}
-	
+
 	@org.junit.Test
-	public void Test(){
-		
+	public void Test() {
+		try {
+			driver.findElement(By.name("Update Available"));
+			driver.findElement(By.name("Dismiss")).click();
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+			System.out.println("No Update form availabe");
+		}
+		try {
+			driver.findElement(By.name("English")).click();
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+			System.out.println("No language selection screen available");
+		}
+
+		try {
+			WebDriverWait hangon = new WebDriverWait(driver, 10);
+			hangon.until(ExpectedConditions.presenceOfElementLocated(By
+					.id("ch.autoscout24.autoscout24.alpha:id/imgAds")));
+			driver.findElementById(
+					"ch.autoscout24.autoscout24.alpha:id/btnClose").click();
+		} catch (Exception e) {
+			System.out.println("No Ads");
+		}
+
+		try {
+			driver.findElement(By.name("Update Available"));
+			driver.findElement(By.name("Dismiss")).click();
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+			System.out.println("No Update form availabe");
+		}
+		driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 	}
-	
 
 	@After
 	public void tearDown() throws Exception {

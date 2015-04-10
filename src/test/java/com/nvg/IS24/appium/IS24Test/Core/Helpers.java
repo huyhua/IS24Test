@@ -1,5 +1,6 @@
 package com.nvg.IS24.appium.IS24Test.Core;
 
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.ios.IOSDriver;
 
@@ -17,14 +18,14 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public abstract class Helpers {
 
-	private static IOSDriver driver;
+	private static AppiumDriver driver;
 	private static WebDriverWait driverWait;
 
 	/**
 	 * Initialize the webdriver. Must be called before using any helper methods.
 	 * *
 	 */
-	public static void init(IOSDriver webDriver) {
+	public static void init(AppiumDriver webDriver) {
 		driver = webDriver;
 		int timeoutInSeconds = 60;
 		// must wait at least 60 seconds for running on Sauce.
@@ -99,18 +100,18 @@ public abstract class Helpers {
 	 * Return element using uiAutomation strategy
 	 */
 	public static MobileElement uiAutomation(String path) {
-		return w(driver
+		return w(((IOSDriver) driver)
 				.findElementByIosUIAutomation("UIATarget.localTarget().frontMostApp().mainWindow()."
 						+ path));
 	}
 
 	public static List<MobileElement> uiAutomations(String path) {
-		return w(driver
+		return w(((IOSDriver) driver)
 				.findElementsByIosUIAutomation("UIATarget.localTarget().frontMostApp().mainWindow()."
 						+ path));
 	}
-	
-	public static MobileElement accessibilityId(String id){
+
+	public static MobileElement accessibilityId(String id) {
 		return w(driver.findElementByAccessibilityId(id));
 	}
 
@@ -314,7 +315,7 @@ public abstract class Helpers {
 		}
 	}
 
-	public static void tryAction(Consumer<IOSDriver> action) {
+	public static void tryAction(Consumer<AppiumDriver> action) {
 		try {
 			driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 			action.accept(driver);

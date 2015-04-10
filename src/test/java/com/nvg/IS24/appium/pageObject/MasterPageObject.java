@@ -1,24 +1,24 @@
 package com.nvg.IS24.appium.pageObject;
 
+import static com.nvg.IS24.appium.IS24Test.Core.Helpers.accessibilityId;
 import static com.nvg.IS24.appium.IS24Test.Core.Helpers.for_text;
 import static com.nvg.IS24.appium.IS24Test.Core.Helpers.uiAutomation;
 import static com.nvg.IS24.appium.IS24Test.Core.Helpers.waitMsec;
-import static com.nvg.IS24.appium.IS24Test.Core.Helpers.accessibilityId;
-
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.ios.IOSDriver;
 
 public abstract class MasterPageObject extends PageObjectBase {
 	public menuPageObject menuPage;
 
-	public MasterPageObject(IOSDriver driver) {
+	public MasterPageObject(AppiumDriver driver) {
 		super(driver);
 		menuPage = new menuPageObject(driver);
 
 	}
 
 	public MobileElement NavItem(String locator) {
-		return (MobileElement) driver
+		return (MobileElement) ((IOSDriver) driver)
 				.findElementByIosUIAutomation("UIATarget.localTarget().frontMostApp().navigationBar()."
 						+ locator);
 
@@ -36,7 +36,7 @@ public abstract class MasterPageObject extends PageObjectBase {
 
 	public class menuPageObject extends PageElementObjectBase {
 
-		public menuPageObject(IOSDriver driver) {
+		public menuPageObject(AppiumDriver driver) {
 			super(driver);
 			setPageIdentifier(for_text("Home"));
 		}

@@ -1,6 +1,6 @@
 package com.nvg.IS24.appium.pageObject;
 
-import io.appium.java_client.ios.IOSDriver;
+import io.appium.java_client.AppiumDriver;
 
 import org.openqa.selenium.By;
 
@@ -14,9 +14,9 @@ public abstract class PageObjectBase {
 		this.pageIdentifier = pageIdentifier;
 	}
 
-	protected IOSDriver driver;
+	protected AppiumDriver driver;
 
-	protected PageObjectBase(IOSDriver driver) {
+	protected PageObjectBase(AppiumDriver driver) {
 		this.driver = driver;
 	}
 

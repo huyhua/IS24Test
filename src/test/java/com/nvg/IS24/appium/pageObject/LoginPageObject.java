@@ -4,7 +4,7 @@ import static com.nvg.IS24.appium.IS24Test.Core.Helpers.for_text;
 import static com.nvg.IS24.appium.IS24Test.Core.Helpers.tryAction;
 import static com.nvg.IS24.appium.IS24Test.Core.Helpers.uiAutomation;
 import static com.nvg.IS24.appium.IS24Test.Core.Helpers.waitMsec;
-import io.appium.java_client.ios.IOSDriver;
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.ios.IOSElement;
 
 public class LoginPageObject extends MasterPageObject {
@@ -12,7 +12,7 @@ public class LoginPageObject extends MasterPageObject {
 	LoginSectionPageObject login;
 	RegisterSectionPageObject register;
 
-	public LoginPageObject(IOSDriver driver) {
+	public LoginPageObject(AppiumDriver driver) {
 		super(driver);
 		setPageIdentifier(for_text("My account"));
 		login = new LoginSectionPageObject(driver);
@@ -29,7 +29,7 @@ public class LoginPageObject extends MasterPageObject {
 
 	public class LoginSectionPageObject extends PageElementObjectBase {
 
-		public LoginSectionPageObject(IOSDriver driver) {
+		public LoginSectionPageObject(AppiumDriver driver) {
 			super(driver);
 		}
 
@@ -81,7 +81,7 @@ public class LoginPageObject extends MasterPageObject {
 
 	public class RegisterSectionPageObject extends PageElementObjectBase {
 
-		public RegisterSectionPageObject(IOSDriver driver) {
+		public RegisterSectionPageObject(AppiumDriver driver) {
 			super(driver);
 		}
 

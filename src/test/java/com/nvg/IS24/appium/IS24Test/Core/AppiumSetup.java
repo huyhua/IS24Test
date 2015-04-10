@@ -1,5 +1,7 @@
 package com.nvg.IS24.appium.IS24Test.Core;
 
+import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 
 import java.io.File;
@@ -26,7 +28,7 @@ import com.saucelabs.saucerest.SauceREST;
 
 public class AppiumSetup implements SauceOnDemandSessionIdProvider {
 
-	protected IOSDriver driver;
+	protected AppiumDriver driver;
 
 	public static WebElement wait(By locator) {
 		return Helpers.wait(locator);
@@ -34,6 +36,7 @@ public class AppiumSetup implements SauceOnDemandSessionIdProvider {
 
 	private boolean runOnSauce = System.getProperty("sauce") != null;
 	private boolean jenkins = System.getProperty("jenkins") != null;
+	private String platform = System.getProperty("platform", "ios").toLowerCase();
 
 	/**
 	 * Authenticate to Sauce with environment variables SAUCE_USER_NAME and
@@ -80,14 +83,22 @@ public class AppiumSetup implements SauceOnDemandSessionIdProvider {
 		capabilities.setCapability("deviceName", "iPhone Simulator");
 		String userDir;
 		String localApp;
-		
-		if(jenkins){
+		URL serverURL;
+
+		if (jenkins) {
 			throw new IllegalArgumentException("Not Implemented");
-		}else{
+		} else {
 			userDir = System.getProperty("user.dir");
 			localApp = "ImmoScout24.zip";
+			if (platform.equals("ios")) {
+				localApp = "ImmoScout24.zip";
+			} else if (platform.equals("android")) {
+				localApp = "ImmoScout24.apk";
+			} else {
+				throw new IllegalArgumentException("Invalid platform");
+			}
 		}
-		
+
 		if (runOnSauce) {
 			String user = auth.getUsername();
 			String key = auth.getAccessKey();
@@ -98,16 +109,17 @@ public class AppiumSetup implements SauceOnDemandSessionIdProvider {
 			rest.uploadFile(new File(userDir, localApp), localApp);
 
 			capabilities.setCapability("app", "sauce-storage:" + localApp);
-			URL sauceURL = new URL("http://" + user + ":" + key
+			serverURL = new URL("http://" + user + ":" + key
 					+ "@ondemand.saucelabs.com:80/wd/hub");
-			driver = new IOSDriver(sauceURL, capabilities);
+			driver = getDriver(serverURL, capabilities);
+
 		} else {
 
 			String appPath = Paths.get(userDir, localApp).toAbsolutePath()
 					.toString();
 			capabilities.setCapability("app", appPath);
-			driver = new IOSDriver(new URL("http://127.0.0.1:4723/wd/hub"),
-					capabilities);
+			serverURL = new URL("http://127.0.0.1:4723/wd/hub");
+			driver = getDriver(serverURL, capabilities);
 		}
 
 		sessionId = driver.getSessionId().toString();
@@ -127,4 +139,14 @@ public class AppiumSetup implements SauceOnDemandSessionIdProvider {
 		return runOnSauce ? sessionId : null;
 	}
 
+	private AppiumDriver getDriver(URL serverURL,
+			DesiredCapabilities capabilities) {
+		if (platform.equals("ios")) {
+			return new IOSDriver(serverURL, capabilities);
+		} else if (platform.equals("android")) {
+			return new AndroidDriver(serverURL, capabilities);
+		} else {
+			throw new IllegalArgumentException("Invalid platform");
+		}
+	};
 }

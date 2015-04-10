@@ -1,12 +1,12 @@
 package com.nvg.IS24.appium.pageObject;
 
+import static com.nvg.IS24.appium.IS24Test.Core.Helpers.accessibilityId;
 import static com.nvg.IS24.appium.IS24Test.Core.Helpers.for_tags;
 import static com.nvg.IS24.appium.IS24Test.Core.Helpers.uiAutomation;
 import static com.nvg.IS24.appium.IS24Test.Core.Helpers.uiAutomations;
 import static com.nvg.IS24.appium.IS24Test.Core.Helpers.waitMsec;
 import static com.nvg.IS24.appium.IS24Test.Core.Helpers.waitSec;
-import static com.nvg.IS24.appium.IS24Test.Core.Helpers.accessibilityId;
-
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
@@ -19,7 +19,7 @@ public class SearchPageObject extends MasterPageObject {
 	public CityAreaPageObject cityArea;
 	public RadiusPageObject radius;
 
-	public SearchPageObject(IOSDriver driver) {
+	public SearchPageObject(AppiumDriver driver) {
 		super(driver);
 		setPageIdentifier(for_tags("UIANavigationBar"));
 		cityArea = new CityAreaPageObject(driver);
@@ -55,7 +55,7 @@ public class SearchPageObject extends MasterPageObject {
 	public SearchPageObject where(String location) {
 
 		accessibilityId("Search_BtnWhere").click();
-		IOSElement searchBar = (IOSElement) driver
+		IOSElement searchBar = (IOSElement) ((IOSDriver) driver)
 				.findElementByIosUIAutomation("UIATarget.localTarget().frontMostApp().navigationBar().searchBars()[0].searchBars()[0]");
 		searchBar.setValue(location);
 		waitSec(2);
@@ -67,7 +67,7 @@ public class SearchPageObject extends MasterPageObject {
 
 	public class CityAreaPageObject extends PageElementObjectBase {
 
-		public CityAreaPageObject(IOSDriver driver) {
+		public CityAreaPageObject(AppiumDriver driver) {
 			super(driver);
 		}
 
@@ -115,7 +115,7 @@ public class SearchPageObject extends MasterPageObject {
 
 	public class RadiusPageObject extends PageElementObjectBase {
 
-		public RadiusPageObject(IOSDriver driver) {
+		public RadiusPageObject(AppiumDriver driver) {
 			super(driver);
 
 		}
@@ -154,10 +154,13 @@ public class SearchPageObject extends MasterPageObject {
 
 		return this;
 	}
-	
-	public SearchPageObject resetSearch(){
+
+	public SearchPageObject resetSearch() {
 		NavItem("rightButton()").click();
-		driver.findElementByIosUIAutomation("UIATarget.localTarget().frontMostApp().alert().buttons()[\"Reset\"]").click();
+		((IOSDriver) driver)
+				.findElementByIosUIAutomation(
+						"UIATarget.localTarget().frontMostApp().alert().buttons()[\"Reset\"]")
+				.click();
 		return new SearchPageObject(driver);
 	}
 
