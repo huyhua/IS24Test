@@ -2,13 +2,14 @@ package com.nvg.IS24.appium.IS24Test.Core;
 
 import static com.nvg.IS24.appium.IS24Test.Core.Helpers.waitSec;
 import static com.nvg.IS24.appium.IS24Test.Core.Helpers.text;
-
 import io.appium.java_client.AppiumDriver;
+
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
 import org.junit.Rule;
 import org.junit.rules.ErrorCollector;
+import org.openqa.selenium.NoSuchElementException;
 
 import com.nvg.IS24.appium.pageObject.LoginPageObject;
 
@@ -42,18 +43,22 @@ public abstract class TestBase extends AppiumSetup {
 	}
 
 	private void bypassInitialScreens() {
-		driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		try {
 			text("Ignore").click();
-			;
-		} catch (Exception e) {
+		} catch (NoSuchElementException e) {
+			try {
+				text("Dismiss").click();
+			} catch (NoSuchElementException e1) {
+
+			}
 			// If one of the 2 screens don't appear. Skip it instead of disband
 			// test
 		}
 		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		try {
 			text("English").click();
-		} catch (Exception e) {
+		} catch (NoSuchElementException e) {
 			// If one of the 2 screens don't appear. Skip it instead of disband
 			// test
 		}
