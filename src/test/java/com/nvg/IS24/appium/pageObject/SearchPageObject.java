@@ -21,8 +21,14 @@ public class SearchPageObject extends MasterPageObject {
 
 	public SearchPageObject(AppiumDriver driver, String platform) {
 		super(driver, platform);
-		
-		setPageIdentifier(for_tags("UIANavigationBar"));
+		switch (platform) {
+		case "ios":
+			setPageIdentifier(for_tags("UIANavigationBar"));
+			break;
+		case "android":
+			break;
+		}
+
 		cityArea = new CityAreaPageObject(driver, platform);
 		radius = new RadiusPageObject(driver, platform);
 		hitNumber = getSearchResult();
@@ -38,30 +44,54 @@ public class SearchPageObject extends MasterPageObject {
 	public SearchPageObject buyWhat(int index) {
 
 		accessibilityId("Search_BtnWhat").click();
-		uiAutomation("tableViews()[0].buttons()[\"Buy\"]").click();
-		uiAutomation("tableViews()[0].visibleCells()[" + index + "]").click();
-		waitMsec(500);
+		switch (platform) {
+		case "ios":
+			uiAutomation("tableViews()[0].buttons()[\"Buy\"]").click();
+			uiAutomation("tableViews()[0].visibleCells()[" + index + "]").click();
+			waitMsec(500);
+
+			break;
+		case "android":
+			break;
+		}
+
 		return new SearchPageObject(driver, platform);
 	}
 
 	public SearchPageObject rentWhat(int index) {
 
 		accessibilityId("Search_BtnWhat").click();
-		uiAutomation("tableViews()[0].buttons()[\"Rent\"]").click();
-		uiAutomation("tableViews()[0].visibleCells()[" + index + "]").click();
-		waitMsec(500);
+		switch (platform) {
+		case "ios":
+
+			uiAutomation("tableViews()[0].buttons()[\"Rent\"]").click();
+			uiAutomation("tableViews()[0].visibleCells()[" + index + "]").click();
+			waitMsec(500);
+			break;
+			
+		case "android":
+			break;
+		}
 		return new SearchPageObject(driver, platform);
 	}
 
 	public SearchPageObject where(String location) {
 
 		accessibilityId("Search_BtnWhere").click();
-		IOSElement searchBar = (IOSElement) ((IOSDriver) driver)
-				.findElementByIosUIAutomation("UIATarget.localTarget().frontMostApp().navigationBar().searchBars()[0].searchBars()[0]");
-		searchBar.setValue(location);
-		waitSec(2);
-		uiAutomation("tableViews()[0].visibleCells()[0]").click();
-		waitMsec(500);
+		switch (platform) {
+		case "ios":
+
+			IOSElement searchBar = (IOSElement) ((IOSDriver) driver)
+					.findElementByIosUIAutomation("UIATarget.localTarget().frontMostApp().navigationBar().searchBars()[0].searchBars()[0]");
+			searchBar.setValue(location);
+			waitSec(2);
+			uiAutomation("tableViews()[0].visibleCells()[0]").click();
+			waitMsec(500);
+			break;
+			
+		case "android":
+			break;
+		}
 
 		return new SearchPageObject(driver, platform);
 	}
@@ -73,13 +103,21 @@ public class SearchPageObject extends MasterPageObject {
 		}
 
 		public CityAreaPageObject open() {
+			switch (platform) {
+			case "ios":
+				uiAutomation("tableViews()[0].cells()[2]").click();
+				waitSec(1);
+				break;
 
-			uiAutomation("tableViews()[0].cells()[2]").click();
-			waitSec(1);
+			case "android":
+				break;
+			}
+
 			return new CityAreaPageObject(driver, platform);
 		}
 
 		public List<MobileElement> getDistricts() {
+
 			return uiAutomations("tableViews()[0].cells().withPredicate(\"name beginswith 'District'\")");
 		}
 
@@ -100,9 +138,17 @@ public class SearchPageObject extends MasterPageObject {
 
 		public CityAreaPageObject select(String area) {
 
-			uiAutomation("tableViews()[0].cells()[\"" + area + "\"]").click();
-			done();
-			waitMsec(500);
+			switch (platform) {
+			case "ios":
+				uiAutomation("tableViews()[0].cells()[\"" + area + "\"]").click();
+				rightButton();
+				waitMsec(500);
+				break;
+
+			case "android":
+				break;
+			}
+
 			return this;
 		}
 	}
@@ -133,10 +179,17 @@ public class SearchPageObject extends MasterPageObject {
 		}
 
 		public RadiusPageObject select(int index) {
+			switch (platform) {
+			case "ios":
+				uiAutomation("tableViews()[0].visibleCells()[" + index + "]")
+						.click();
+				waitMsec(700);
+				break;
 
-			uiAutomation("tableViews()[0].visibleCells()[" + index + "]")
-					.click();
-			waitMsec(700);
+			case "android":
+				break;
+			}
+
 			return this;
 		}
 
@@ -157,11 +210,19 @@ public class SearchPageObject extends MasterPageObject {
 	}
 
 	public SearchPageObject resetSearch() {
-		NavItem("rightButton()").click();
-		((IOSDriver) driver)
-				.findElementByIosUIAutomation(
-						"UIATarget.localTarget().frontMostApp().alert().buttons()[\"Reset\"]")
-				.click();
+		switch (platform) {
+		case "ios":
+			rightButton();
+			((IOSDriver) driver)
+					.findElementByIosUIAutomation(
+							"UIATarget.localTarget().frontMostApp().alert().buttons()[\"Reset\"]")
+					.click();
+			break;
+			
+		case "android":
+			break;
+		}
+
 		return new SearchPageObject(driver, platform);
 	}
 

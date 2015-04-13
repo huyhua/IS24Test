@@ -24,7 +24,7 @@ public abstract class MasterPageObject extends PageObjectBase {
 
 	}
 
-	public MasterPageObject done() {
+	public MasterPageObject rightButton() {
 		NavItem("rightButton()").click();
 		return this;
 	}
