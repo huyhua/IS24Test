@@ -1,7 +1,7 @@
 package com.nvg.IS24.appium.IS24Test.Core;
 
-import static com.nvg.IS24.appium.IS24Test.Core.Helpers.waitSec;
-import static com.nvg.IS24.appium.IS24Test.Core.Helpers.text;
+import static com.nvg.SupportClasses.Helpers.text;
+import static com.nvg.SupportClasses.Helpers.waitSec;
 import io.appium.java_client.AppiumDriver;
 
 import java.util.concurrent.TimeUnit;

@@ -1,4 +1,4 @@
-package com.nvg.IS24.appium.IS24Test.Core;
+package com.nvg.SupportClasses;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;

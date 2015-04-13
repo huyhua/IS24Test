@@ -1,7 +1,7 @@
 package com.nvg.IS24.appium.IS24Test;
 
-import static com.nvg.IS24.appium.IS24Test.Core.Helpers.uiAutomation;
-import static com.nvg.IS24.appium.IS24Test.Core.Helpers.waitMsec;
+import static com.nvg.SupportClasses.Helpers.uiAutomation;
+import static com.nvg.SupportClasses.Helpers.waitMsec;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 
@@ -12,6 +12,8 @@ import com.nvg.IS24.appium.IS24Test.Core.TestBase;
 import com.nvg.IS24.appium.pageObject.LoginPageObject;
 import com.nvg.IS24.appium.pageObject.SearchListPageObject;
 import com.nvg.IS24.appium.pageObject.SearchPageObject;
+import com.nvg.SupportClasses.ConditionalIgnoreRule.ConditionalIgnore;
+import com.nvg.SupportClasses.NotRunningOnIOS;
 
 /**
  * Unit test for simple App.
@@ -25,6 +27,7 @@ public class AppTest extends TestBase {
 	private SearchListPageObject searchList;
 
 	@Test
+	@ConditionalIgnore(condition = NotRunningOnIOS.class)
 	public void testSuite1() {
 
 		// Test case 2.1

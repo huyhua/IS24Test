@@ -21,6 +21,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
+import com.nvg.SupportClasses.ConditionalIgnoreRule;
+import com.nvg.SupportClasses.Helpers;
 import com.saucelabs.common.SauceOnDemandAuthentication;
 import com.saucelabs.common.SauceOnDemandSessionIdProvider;
 import com.saucelabs.junit.SauceOnDemandTestWatcher;
@@ -45,6 +47,9 @@ public class AppiumSetup implements SauceOnDemandSessionIdProvider {
 	private boolean jenkins = System.getProperty("jenkins") != null;
 
 	public String platform;
+	
+	@Rule
+	public ConditionalIgnoreRule rule = new ConditionalIgnoreRule();
 
 	@Rule
 	public TestRule printTests = new TestWatcher() {

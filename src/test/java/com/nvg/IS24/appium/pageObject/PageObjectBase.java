@@ -4,7 +4,7 @@ import io.appium.java_client.AppiumDriver;
 
 import org.openqa.selenium.By;
 
-import com.nvg.IS24.appium.IS24Test.Core.Helpers;
+import com.nvg.SupportClasses.Helpers;
 
 public abstract class PageObjectBase {
 
