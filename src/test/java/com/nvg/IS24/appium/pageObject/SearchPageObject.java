@@ -1,17 +1,25 @@
 package com.nvg.IS24.appium.pageObject;
 
 import static com.nvg.SupportClasses.Helpers.accessibilityId;
+import static com.nvg.SupportClasses.Helpers.childElement;
 import static com.nvg.SupportClasses.Helpers.for_tags;
+import static com.nvg.SupportClasses.Helpers.resourceId;
+import static com.nvg.SupportClasses.Helpers.tag;
+import static com.nvg.SupportClasses.Helpers.text;
 import static com.nvg.SupportClasses.Helpers.uiAutomation;
 import static com.nvg.SupportClasses.Helpers.uiAutomations;
 import static com.nvg.SupportClasses.Helpers.waitMsec;
 import static com.nvg.SupportClasses.Helpers.waitSec;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.AndroidKeyCode;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
 
 import java.util.List;
+
+import org.openqa.selenium.By;
 
 public class SearchPageObject extends MasterPageObject {
 
@@ -26,6 +34,7 @@ public class SearchPageObject extends MasterPageObject {
 			setPageIdentifier(for_tags("UIANavigationBar"));
 			break;
 		case "android":
+			setPageIdentifier(By.id("android:id/content"));
 			break;
 		}
 
@@ -43,15 +52,22 @@ public class SearchPageObject extends MasterPageObject {
 
 	public SearchPageObject buyWhat(int index) {
 
-		accessibilityId("Search_BtnWhat").click();
 		switch (platform) {
 		case "ios":
+			accessibilityId("Search_BtnWhat").click();
 			uiAutomation("tableViews()[0].buttons()[\"Buy\"]").click();
-			uiAutomation("tableViews()[0].visibleCells()[" + index + "]").click();
+			uiAutomation("tableViews()[0].visibleCells()[" + index + "]")
+					.click();
 			waitMsec(500);
 
 			break;
 		case "android":
+			accessibilityId("Search_BtnWhat").findElementByAccessibilityId(
+					"SpinnerText").click();
+			text("Buy").click();
+			MobileElement Wrapper = resourceId("android:id/list");
+			childElement(Wrapper, By.id("android:id/text1")).get(index).click();
+
 			break;
 		}
 
@@ -60,16 +76,21 @@ public class SearchPageObject extends MasterPageObject {
 
 	public SearchPageObject rentWhat(int index) {
 
-		accessibilityId("Search_BtnWhat").click();
 		switch (platform) {
 		case "ios":
-
+			accessibilityId("Search_BtnWhat").click();
 			uiAutomation("tableViews()[0].buttons()[\"Rent\"]").click();
-			uiAutomation("tableViews()[0].visibleCells()[" + index + "]").click();
+			uiAutomation("tableViews()[0].visibleCells()[" + index + "]")
+					.click();
 			waitMsec(500);
 			break;
-			
+
 		case "android":
+			accessibilityId("Search_BtnWhat").findElementByAccessibilityId(
+					"SpinnerText").click();
+			text("Buy").click();
+			MobileElement Wrapper = resourceId("android:id/list");
+			childElement(Wrapper, By.id("android:id/text1")).get(index).click();
 			break;
 		}
 		return new SearchPageObject(driver, platform);
@@ -77,10 +98,9 @@ public class SearchPageObject extends MasterPageObject {
 
 	public SearchPageObject where(String location) {
 
-		accessibilityId("Search_BtnWhere").click();
 		switch (platform) {
 		case "ios":
-
+			accessibilityId("Search_BtnWhere").click();
 			IOSElement searchBar = (IOSElement) ((IOSDriver) driver)
 					.findElementByIosUIAutomation("UIATarget.localTarget().frontMostApp().navigationBar().searchBars()[0].searchBars()[0]");
 			searchBar.setValue(location);
@@ -88,8 +108,12 @@ public class SearchPageObject extends MasterPageObject {
 			uiAutomation("tableViews()[0].visibleCells()[0]").click();
 			waitMsec(500);
 			break;
-			
+
 		case "android":
+			accessibilityId("ContentText").click();
+			tag("android.widget.EditText").sendKeys(location);
+			waitSec(2);
+			((AndroidDriver) driver).sendKeyEvent(AndroidKeyCode.ENTER);
 			break;
 		}
 
@@ -140,7 +164,8 @@ public class SearchPageObject extends MasterPageObject {
 
 			switch (platform) {
 			case "ios":
-				uiAutomation("tableViews()[0].cells()[\"" + area + "\"]").click();
+				uiAutomation("tableViews()[0].cells()[\"" + area + "\"]")
+						.click();
 				rightButton();
 				waitMsec(500);
 				break;
@@ -168,7 +193,14 @@ public class SearchPageObject extends MasterPageObject {
 		}
 
 		public RadiusPageObject open() {
-
+			switch (platform) {
+			case "ios":
+				accessibilityId("Search_BtnRadius").click();
+				waitMsec(500);
+				break;
+			case "android":
+				break;
+			}
 			accessibilityId("Search_BtnRadius").click();
 			waitMsec(500);
 			return this;
@@ -218,8 +250,10 @@ public class SearchPageObject extends MasterPageObject {
 							"UIATarget.localTarget().frontMostApp().alert().buttons()[\"Reset\"]")
 					.click();
 			break;
-			
+
 		case "android":
+			accessibilityId("Search_BtnReset").click();
+			resourceId("android:id/button1").click();
 			break;
 		}
 

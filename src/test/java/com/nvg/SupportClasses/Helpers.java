@@ -109,6 +109,10 @@ public abstract class Helpers {
 	public static By for_tags(String tagName) {
 		return By.className(tagName);
 	}
+	
+	public static By for_id(String id) {
+		return By.id(id);
+	}
 
 	/**
 	 * Return a static text locator by xpath index *
@@ -179,6 +183,18 @@ public abstract class Helpers {
 	 */
 	public static List<MobileElement> tags(String tagName) {
 		return elements(for_tags(tagName));
+	}
+	
+	public static MobileElement tag(String tagname) {
+		return element(for_tags(tagname));
+	}
+	
+	public static MobileElement resourceId(String id) {
+		return element(for_id(id));
+	}
+	
+	public static List<MobileElement> resourceIds(String id) {
+		return elements(for_id(id));
 	}
 
 	@SuppressWarnings("serial")
