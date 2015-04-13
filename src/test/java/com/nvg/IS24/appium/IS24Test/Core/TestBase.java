@@ -34,7 +34,7 @@ public abstract class TestBase extends AppiumSetup {
 			Consumer<AppiumDriver> action) {
 
 		bypassInitialScreens();
-		loginPage = new LoginPageObject(driver).open().loginWith(username,
+		loginPage = new LoginPageObject(driver, platform).open().loginWith(username,
 				password);
 
 		loginPage.menuPage.search();

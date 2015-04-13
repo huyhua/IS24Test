@@ -44,7 +44,7 @@ public class AppiumSetup implements SauceOnDemandSessionIdProvider {
 	protected AppiumDriver driver;
 	private boolean jenkins = System.getProperty("jenkins") != null;
 
-	private String platform ;
+	public String platform;
 
 	@Rule
 	public TestRule printTests = new TestWatcher() {

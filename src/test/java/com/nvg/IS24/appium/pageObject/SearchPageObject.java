@@ -19,11 +19,12 @@ public class SearchPageObject extends MasterPageObject {
 	public CityAreaPageObject cityArea;
 	public RadiusPageObject radius;
 
-	public SearchPageObject(AppiumDriver driver) {
-		super(driver);
+	public SearchPageObject(AppiumDriver driver, String platform) {
+		super(driver, platform);
+		
 		setPageIdentifier(for_tags("UIANavigationBar"));
-		cityArea = new CityAreaPageObject(driver);
-		radius = new RadiusPageObject(driver);
+		cityArea = new CityAreaPageObject(driver, platform);
+		radius = new RadiusPageObject(driver, platform);
 		hitNumber = getSearchResult();
 	}
 
@@ -31,7 +32,7 @@ public class SearchPageObject extends MasterPageObject {
 
 		menuPage.open().search();
 
-		return new SearchPageObject(driver);
+		return new SearchPageObject(driver, platform);
 	}
 
 	public SearchPageObject buyWhat(int index) {
@@ -40,7 +41,7 @@ public class SearchPageObject extends MasterPageObject {
 		uiAutomation("tableViews()[0].buttons()[\"Buy\"]").click();
 		uiAutomation("tableViews()[0].visibleCells()[" + index + "]").click();
 		waitMsec(500);
-		return new SearchPageObject(driver);
+		return new SearchPageObject(driver, platform);
 	}
 
 	public SearchPageObject rentWhat(int index) {
@@ -49,7 +50,7 @@ public class SearchPageObject extends MasterPageObject {
 		uiAutomation("tableViews()[0].buttons()[\"Rent\"]").click();
 		uiAutomation("tableViews()[0].visibleCells()[" + index + "]").click();
 		waitMsec(500);
-		return new SearchPageObject(driver);
+		return new SearchPageObject(driver, platform);
 	}
 
 	public SearchPageObject where(String location) {
@@ -62,20 +63,20 @@ public class SearchPageObject extends MasterPageObject {
 		uiAutomation("tableViews()[0].visibleCells()[0]").click();
 		waitMsec(500);
 
-		return new SearchPageObject(driver);
+		return new SearchPageObject(driver, platform);
 	}
 
 	public class CityAreaPageObject extends PageElementObjectBase {
 
-		public CityAreaPageObject(AppiumDriver driver) {
-			super(driver);
+		public CityAreaPageObject(AppiumDriver driver, String platform) {
+			super(driver, platform);
 		}
 
 		public CityAreaPageObject open() {
 
 			uiAutomation("tableViews()[0].cells()[2]").click();
 			waitSec(1);
-			return new CityAreaPageObject(driver);
+			return new CityAreaPageObject(driver, platform);
 		}
 
 		public List<MobileElement> getDistricts() {
@@ -110,13 +111,13 @@ public class SearchPageObject extends MasterPageObject {
 
 		cityArea.open().select(area);
 
-		return new SearchPageObject(driver);
+		return new SearchPageObject(driver, platform);
 	}
 
 	public class RadiusPageObject extends PageElementObjectBase {
 
-		public RadiusPageObject(AppiumDriver driver) {
-			super(driver);
+		public RadiusPageObject(AppiumDriver driver, String platform) {
+			super(driver, platform);
 
 		}
 
@@ -144,7 +145,7 @@ public class SearchPageObject extends MasterPageObject {
 	public SearchPageObject radius(int index) {
 
 		radius.open().select(index);
-		return new SearchPageObject(driver);
+		return new SearchPageObject(driver, platform);
 	}
 
 	public SearchPageObject search() {
@@ -161,7 +162,7 @@ public class SearchPageObject extends MasterPageObject {
 				.findElementByIosUIAutomation(
 						"UIATarget.localTarget().frontMostApp().alert().buttons()[\"Reset\"]")
 				.click();
-		return new SearchPageObject(driver);
+		return new SearchPageObject(driver, platform);
 	}
 
 	public int getSearchResult() {

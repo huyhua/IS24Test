@@ -13,8 +13,8 @@ public class SearchListPageObject extends MasterPageObject {
 
 	public List<MobileElement> items;
 
-	public SearchListPageObject(AppiumDriver driver) {
-		super(driver);
+	public SearchListPageObject(AppiumDriver driver, String platform) {
+		super(driver, platform);
 		setPageIdentifier(for_text("results"));
 		items = getActiveItems();
 
@@ -23,7 +23,7 @@ public class SearchListPageObject extends MasterPageObject {
 	public SearchListPageObject open() {
 
 		waitForPage();
-		return new SearchListPageObject(driver);
+		return new SearchListPageObject(driver, platform);
 	}
 
 	public SearchListPageObject sort(int index) {
@@ -32,7 +32,7 @@ public class SearchListPageObject extends MasterPageObject {
 		waitMsec(400);
 		uiAutomation("tableViews()[1].cells()[" + index + "]").click();
 		waitMsec(500);
-		return new SearchListPageObject(driver);
+		return new SearchListPageObject(driver, platform);
 	}
 
 	private List<MobileElement> getActiveItems() {

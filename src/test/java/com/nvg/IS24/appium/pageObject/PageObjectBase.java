@@ -9,6 +9,7 @@ import com.nvg.IS24.appium.IS24Test.Core.Helpers;
 public abstract class PageObjectBase {
 
 	protected By pageIdentifier;
+	protected String platform;
 
 	public void setPageIdentifier(By pageIdentifier) {
 		this.pageIdentifier = pageIdentifier;
@@ -16,8 +17,9 @@ public abstract class PageObjectBase {
 
 	protected AppiumDriver driver;
 
-	protected PageObjectBase(AppiumDriver driver) {
+	protected PageObjectBase(AppiumDriver driver, String platform) {
 		this.driver = driver;
+		this.platform = platform;
 	}
 
 	public void waitForPage() {

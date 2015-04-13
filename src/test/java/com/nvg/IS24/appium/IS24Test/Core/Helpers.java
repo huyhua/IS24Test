@@ -2,6 +2,7 @@ package com.nvg.IS24.appium.IS24Test.Core;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
+import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 
 import java.util.ArrayList;
@@ -254,7 +255,7 @@ public abstract class Helpers {
 	}
 
 	/**
-	 * Return element using uiAutomation strategy
+	 * Return element using uiAutomation strategy. Valid for iOS only
 	 */
 	public static MobileElement uiAutomation(String path) {
 		return w(((IOSDriver) driver)
@@ -267,7 +268,19 @@ public abstract class Helpers {
 				.findElementsByIosUIAutomation("UIATarget.localTarget().frontMostApp().mainWindow()."
 						+ path));
 	}
+	
+	/**
+	 * Return element using Google uiAutomator. Valid for android test only
+	 */
+	public static MobileElement googleAutomator(String path) {
+		return w(((AndroidDriver)driver).findElementByAndroidUIAutomator(path));
+	}
+	
+	public static List<MobileElement> googleAutomators(String path) {
+		return w(((AndroidDriver)driver).findElementsByAndroidUIAutomator(path)); 
+	}
 
+	
 	/**
 	 * Wrap WebElement in MobileElement *
 	 */

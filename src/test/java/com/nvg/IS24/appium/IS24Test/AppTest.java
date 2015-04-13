@@ -25,12 +25,11 @@ public class AppTest extends TestBase {
 	private SearchListPageObject searchList;
 
 	@Test
-	@Ignore
 	public void testSuite1() {
 
 		// Test case 2.1
 		startIOSMobileTest(driver -> {
-			searchPage = new SearchPageObject(driver).where("Zurich");
+			searchPage = new SearchPageObject(driver,platform).where("Zurich");
 
 			collector.checkThat("2.1:City Area tab isn't available.",
 					uiAutomation("tableViews()[0].cells()[2]").isDisplayed(),
@@ -45,7 +44,7 @@ public class AppTest extends TestBase {
 		// Test case 2.2, reusing current session to avoid losing time
 		continueCurrentIOSMobileTest(driver -> {
 
-			searchPage = new SearchPageObject(driver);
+			searchPage = new SearchPageObject(driver, platform);
 			int originalHit = searchPage.hitNumber;
 
 			searchPage = searchPage.cityArea("District 1"); // Check District 1,
@@ -68,7 +67,7 @@ public class AppTest extends TestBase {
 		// 2.3 verify Search number with radius modified
 		continueCurrentIOSMobileTest(driver -> {
 
-			searchPage = new SearchPageObject(driver);
+			searchPage = new SearchPageObject(driver, platform);
 
 			int count = searchPage.radius.open().getRadius().size();
 			searchPage.radius.select(0);
@@ -108,8 +107,8 @@ public class AppTest extends TestBase {
 	@Ignore
 	public void AccessibilityTest() {
 		startIOSMobileTest(driver -> {
-			searchPage = new SearchPageObject(driver).where("Zurich").search();
-			searchList = new SearchListPageObject(driver).open().clickItem(1);
+			searchPage = new SearchPageObject(driver, platform).where("Zurich").search();
+			searchList = new SearchListPageObject(driver, platform).open().clickItem(1);
 
 		});
 	}

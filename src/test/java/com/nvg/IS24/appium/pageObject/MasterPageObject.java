@@ -11,9 +11,9 @@ import io.appium.java_client.ios.IOSDriver;
 public abstract class MasterPageObject extends PageObjectBase {
 	public menuPageObject menuPage;
 
-	public MasterPageObject(AppiumDriver driver) {
-		super(driver);
-		menuPage = new menuPageObject(driver);
+	public MasterPageObject(AppiumDriver driver, String platform) {
+		super(driver,platform);
+		menuPage = new menuPageObject(driver, platform);
 
 	}
 
@@ -36,8 +36,8 @@ public abstract class MasterPageObject extends PageObjectBase {
 
 	public class menuPageObject extends PageElementObjectBase {
 
-		public menuPageObject(AppiumDriver driver) {
-			super(driver);
+		public menuPageObject(AppiumDriver driver, String platform) {
+			super(driver, platform);
 			setPageIdentifier(for_text("Home"));
 		}
 

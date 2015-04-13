@@ -12,11 +12,11 @@ public class LoginPageObject extends MasterPageObject {
 	LoginSectionPageObject login;
 	RegisterSectionPageObject register;
 
-	public LoginPageObject(AppiumDriver driver) {
-		super(driver);
+	public LoginPageObject(AppiumDriver driver, String platform) {
+		super(driver, platform);
 		setPageIdentifier(for_text("My account"));
-		login = new LoginSectionPageObject(driver);
-		register = new RegisterSectionPageObject(driver);
+		login = new LoginSectionPageObject(driver, platform);
+		register = new RegisterSectionPageObject(driver, platform);
 
 	}
 
@@ -24,13 +24,13 @@ public class LoginPageObject extends MasterPageObject {
 		menuPage.open().login();
 		waitForPage();
 		waitMsec(500);
-		return new LoginPageObject(driver);
+		return new LoginPageObject(driver, platform);
 	}
 
 	public class LoginSectionPageObject extends PageElementObjectBase {
 
-		public LoginSectionPageObject(AppiumDriver driver) {
-			super(driver);
+		public LoginSectionPageObject(AppiumDriver driver, String platform) {
+			super(driver, platform);
 		}
 
 		public LoginSectionPageObject open() {
@@ -76,13 +76,13 @@ public class LoginPageObject extends MasterPageObject {
 		login.open().fillName(username).fillPassword(password).submit()
 				.waitForLogin();
 
-		return new LoginPageObject(driver);
+		return new LoginPageObject(driver, platform);
 	}
 
 	public class RegisterSectionPageObject extends PageElementObjectBase {
 
-		public RegisterSectionPageObject(AppiumDriver driver) {
-			super(driver);
+		public RegisterSectionPageObject(AppiumDriver driver, String platform) {
+			super(driver, platform);
 		}
 
 		public RegisterSectionPageObject open() {
@@ -128,7 +128,7 @@ public class LoginPageObject extends MasterPageObject {
 
 		register.open().fillEmail(email).fillPassword(password).submit()
 				.waitForRegister();
-		return new LoginPageObject(driver);
+		return new LoginPageObject(driver, platform);
 	}
 
 }
