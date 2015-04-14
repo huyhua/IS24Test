@@ -31,7 +31,7 @@ public class AppTest extends TestBase {
 	public void testSuite1() {
 
 		// Test case 2.1
-		startIOSMobileTest(driver -> {
+		startMobileTest(driver -> {
 			searchPage = new SearchPageObject(driver,platform).where("Zurich");
 
 			collector.checkThat("2.1:City Area tab isn't available.",
@@ -45,7 +45,7 @@ public class AppTest extends TestBase {
 		});
 
 		// Test case 2.2, reusing current session to avoid losing time
-		continueCurrentIOSMobileTest(driver -> {
+		continueCurrentMobileTest(driver -> {
 
 			searchPage = new SearchPageObject(driver, platform);
 			int originalHit = searchPage.hitNumber;
@@ -68,7 +68,7 @@ public class AppTest extends TestBase {
 		});
 
 		// 2.3 verify Search number with radius modified
-		continueCurrentIOSMobileTest(driver -> {
+		continueCurrentMobileTest(driver -> {
 
 			searchPage = new SearchPageObject(driver, platform);
 
@@ -91,16 +91,17 @@ public class AppTest extends TestBase {
 	}
 
 	@Test
-	public void testSuite2() {
-		startIOSMobileTest(driver -> {
-
-		});
+	public void testAndroid() {
+		startMobileTest(driver -> {
+			searchPage = new SearchPageObject(driver, platform).where("Zurich");
+			waitMsec(10000);
+			});
 	}
 
 	@Test
 	@Ignore
 	public void testSuite3() {
-		startIOSMobileTestWithLogin("huyhua@nhatvietgroup.com.vn", "123456",
+		startMobileTestWithLogin("huyhua@nhatvietgroup.com.vn", "123456",
 				driver -> {
 
 				});
@@ -109,7 +110,7 @@ public class AppTest extends TestBase {
 	@Test
 	@Ignore
 	public void AccessibilityTest() {
-		startIOSMobileTest(driver -> {
+		startMobileTest(driver -> {
 			searchPage = new SearchPageObject(driver, platform).where("Zurich").search();
 			searchList = new SearchListPageObject(driver, platform).open().clickItem(1);
 

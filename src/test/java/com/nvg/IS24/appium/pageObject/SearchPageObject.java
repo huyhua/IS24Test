@@ -10,6 +10,8 @@ import static com.nvg.SupportClasses.Helpers.uiAutomation;
 import static com.nvg.SupportClasses.Helpers.uiAutomations;
 import static com.nvg.SupportClasses.Helpers.waitMsec;
 import static com.nvg.SupportClasses.Helpers.waitSec;
+import static com.nvg.SupportClasses.Helpers.xpath;
+import static com.nvg.SupportClasses.Helpers.xpaths;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
@@ -134,6 +136,14 @@ public class SearchPageObject extends MasterPageObject {
 				break;
 
 			case "android":
+				String xpath = "//android.view.View[1]/android.widget.FrameLayout[2]/android.widget.RelativeLayout[1]"
+						+ "/android.view.View[1]/android.widget.RelativeLayout[1]/android.widget.FrameLayout[1]"
+						+ "/android.widget.RelativeLayout[1]/android.support.v4.view.ViewPager[1]/android.widget.FrameLayout[1]"
+						+ "/android.widget.RelativeLayout[1]/android.widget.ScrollView[1]/android.widget.LinearLayout[1]"
+						+ "/android.widget.LinearLayout[2]/android.widget.LinearLayout[1]/android.widget.LinearLayout[2]"
+						+ "/android.widget.LinearLayout[1]/android.widget.LinearLayout[1]/android.widget.EditText[1]";
+				xpath(xpath).click();
+				waitSec(1);
 				break;
 			}
 
@@ -141,8 +151,16 @@ public class SearchPageObject extends MasterPageObject {
 		}
 
 		public List<MobileElement> getDistricts() {
+			switch(platform){
+			case "ios": 
+				return uiAutomations("tableViews()[0].cells().withPredicate(\"name beginswith 'District'\")"); 
 
-			return uiAutomations("tableViews()[0].cells().withPredicate(\"name beginswith 'District'\")");
+			case "android":
+				return xpaths("//android.widget.TextView[contains(.,'District')]/parent::android.widget.LinearLayout");
+			default: 
+				return uiAutomations("tableViews()[0].cells().withPredicate(\"name beginswith 'District'\")");
+			}
+			
 		}
 
 		public List<MobileElement> getAll() {

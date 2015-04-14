@@ -189,6 +189,14 @@ public abstract class Helpers {
 		return element(for_tags(tagname));
 	}
 	
+	public static MobileElement xpath(String path){
+		return element(By.xpath(path));
+	}
+	
+	public static List<MobileElement> xpaths(String path){
+		return elements(By.xpath(path));
+	}
+	
 	public static MobileElement resourceId(String id) {
 		return element(for_id(id));
 	}

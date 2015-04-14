@@ -19,18 +19,18 @@ public abstract class TestBase extends AppiumSetup {
 	@Rule
 	public ErrorCollector collector = new ErrorCollector();
 
-	public void startIOSMobileTest(Consumer<AppiumDriver> action) {
+	public void startMobileTest(Consumer<AppiumDriver> action) {
 
 		bypassInitialScreens();
 		action.accept(driver);
 
 	};
 
-	public void continueCurrentIOSMobileTest(Consumer<AppiumDriver> action) {
+	public void continueCurrentMobileTest(Consumer<AppiumDriver> action) {
 		action.accept(driver);
 	}
 
-	public void startIOSMobileTestWithLogin(String username, String password,
+	public void startMobileTestWithLogin(String username, String password,
 			Consumer<AppiumDriver> action) {
 
 		bypassInitialScreens();
@@ -55,7 +55,6 @@ public abstract class TestBase extends AppiumSetup {
 			// If one of the 2 screens don't appear. Skip it instead of disband
 			// test
 		}
-		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		try {
 			text("English").click();
 		} catch (NoSuchElementException e) {
