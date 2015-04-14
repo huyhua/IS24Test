@@ -12,8 +12,6 @@ import com.nvg.IS24.appium.IS24Test.Core.TestBase;
 import com.nvg.IS24.appium.pageObject.LoginPageObject;
 import com.nvg.IS24.appium.pageObject.SearchListPageObject;
 import com.nvg.IS24.appium.pageObject.SearchPageObject;
-import com.nvg.SupportClasses.ConditionalIgnoreRule.ConditionalIgnore;
-import com.nvg.SupportClasses.NotRunningOnIOS;
 
 /**
  * Unit test for simple App.
@@ -32,7 +30,7 @@ public class AppTest extends TestBase {
 
 		// Test case 2.1
 		startMobileTest(driver -> {
-			searchPage = new SearchPageObject(driver,platform).where("Zurich");
+			searchPage = new SearchPageObject(driver, platform).where("Zurich");
 
 			collector.checkThat("2.1:City Area tab isn't available.",
 					uiAutomation("tableViews()[0].cells()[2]").isDisplayed(),
@@ -93,8 +91,9 @@ public class AppTest extends TestBase {
 	@Test
 	public void testAndroid() {
 		startMobileTest(driver -> {
-			searchPage = new SearchPageObject(driver, platform).where("Zurich").search();
-			});
+			searchPage = new SearchPageObject(driver, platform).where("Zurich")
+					.search();
+		});
 	}
 
 	@Test
@@ -110,8 +109,10 @@ public class AppTest extends TestBase {
 	@Ignore
 	public void AccessibilityTest() {
 		startMobileTest(driver -> {
-			searchPage = new SearchPageObject(driver, platform).where("Zurich").search();
-			searchList = new SearchListPageObject(driver, platform).open().clickItem(1);
+			searchPage = new SearchPageObject(driver, platform).where("Zurich")
+					.search();
+			searchList = new SearchListPageObject(driver, platform).open()
+					.clickItem(1);
 
 		});
 	}
