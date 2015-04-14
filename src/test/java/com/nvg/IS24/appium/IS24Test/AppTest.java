@@ -27,7 +27,7 @@ public class AppTest extends TestBase {
 	private SearchListPageObject searchList;
 
 	@Test
-	@ConditionalIgnore(condition = NotRunningOnIOS.class)
+	@Ignore
 	public void testSuite1() {
 
 		// Test case 2.1
@@ -93,8 +93,7 @@ public class AppTest extends TestBase {
 	@Test
 	public void testAndroid() {
 		startMobileTest(driver -> {
-			searchPage = new SearchPageObject(driver, platform).where("Zurich");
-			waitMsec(10000);
+			searchPage = new SearchPageObject(driver, platform).where("Zurich").search();
 			});
 	}
 

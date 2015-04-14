@@ -2,6 +2,9 @@ package com.nvg.IS24.appium.IS24Test.Core;
 
 import static com.nvg.SupportClasses.Helpers.text;
 import static com.nvg.SupportClasses.Helpers.waitSec;
+import static com.nvg.SupportClasses.Helpers.xpath;
+
+
 import io.appium.java_client.AppiumDriver;
 
 import java.util.concurrent.TimeUnit;
@@ -45,10 +48,10 @@ public abstract class TestBase extends AppiumSetup {
 	private void bypassInitialScreens() {
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		try {
-			text("Ignore").click();
+			driver.findElementByName("Ignore").click();
 		} catch (NoSuchElementException e) {
 			try {
-				text("Dismiss").click();
+				driver.findElementByName("Dismiss").click();
 			} catch (NoSuchElementException e1) {
 
 			}
@@ -56,7 +59,7 @@ public abstract class TestBase extends AppiumSetup {
 			// test
 		}
 		try {
-			text("English").click();
+			driver.findElementByName("English").click();
 		} catch (NoSuchElementException e) {
 			// If one of the 2 screens don't appear. Skip it instead of disband
 			// test
